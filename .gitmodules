@@ -1,0 +1,3 @@
+[submodule "cvshared"]
+	path = ext/cvshared
+	url = https://github.com/CertiVox/cvshared.git
