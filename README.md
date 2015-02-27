@@ -10,7 +10,7 @@
 ###Building the M-Pin Mobile SDK
 
 1. Import the project from `<mpin-mobile-sdk>/src/android/MPinLib`
-1. Go to the project *Properties->Android* and add dependency to the *appcompat_v7* with it's correct path 
+1. Go to the project *Properties->Android* and add dependency to the *appcompat_v7* with its correct path 
 1. Build the Project
 
 ###Building the M-Pin Sample App
