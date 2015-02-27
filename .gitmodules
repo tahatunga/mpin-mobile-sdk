@@ -1,6 +1,3 @@
 [submodule "ext/cvshared"]
 	path = ext/cvshared
 	url = ../../com/cvshared.git
-[submodule "ext/tee"]
-	path = ext/tee
-	url = ../tee.git
