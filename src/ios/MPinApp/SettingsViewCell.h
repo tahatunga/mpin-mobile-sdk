@@ -11,10 +11,13 @@
 @property (nonatomic, readwrite, retain) IBOutlet UILabel * url;
 @property(nonatomic,weak) IBOutlet UISwitch * otp;
 @property(nonatomic,weak) IBOutlet UISwitch * an;
+@property(nonatomic,weak) IBOutlet UISwitch * devName;
+
 
 - (void) invalidate:(NSMutableArray *) settings atIndex:(NSInteger) index;
 
 -(IBAction)onOTPValueChanged:(id)sender;
 -(IBAction)onAccessNumberValueChanged:(id)sender;
+-(IBAction)onDeviceNameValueChanged:(id)sender;
 
 @end

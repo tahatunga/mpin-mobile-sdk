@@ -316,5 +316,6 @@
     <None Include="..\..\src\core\json\writer.inl">
       <Filter>src\core\json</Filter>
     </None>
+    <None Include="unit_tests.vcxproj.filters" />
   </ItemGroup>
 </Project>

@@ -7,7 +7,10 @@
 //
 
 #import "PinPadViewController.h"
+#import "Constants.h"
 #import "MPin.h"
+#import "BackButton.h"
+#import "UIView+Helper.m"
 
 #define PIN_LENGTH 4
 
@@ -15,7 +18,15 @@ static NSMutableArray * kCircles;
 
 @interface PinPadViewController ()
 
+@property(nonatomic, weak) IBOutlet UIImageView *imgViewDigit0;
+@property(nonatomic, weak) IBOutlet UIImageView *imgViewDigit1;
+@property(nonatomic, weak) IBOutlet UIImageView *imgViewDigit2;
+@property(nonatomic, weak) IBOutlet UIImageView *imgViewDigit3;
+
 - (void) renderNumberTextField:(NSInteger) numberLenght;
+- (IBAction) back:(UIBarButtonItem *)sender;
+
+@property(nonatomic, weak) IBOutlet BackButton *backButton;
 
 @end
 
@@ -24,12 +35,14 @@ static NSMutableArray * kCircles;
 - (void) renderNumberTextField:(NSInteger) numberLenght {
     kCircles = [NSMutableArray arrayWithCapacity:PIN_LENGTH + 1];
     NSString * pinField = @"";
-    for (int i=0; i<PIN_LENGTH; i++)  pinField = [pinField stringByAppendingString:@"◎"];
+    for (int i=0; i<PIN_LENGTH; i++)  pinField = [pinField stringByAppendingString:@"⚪"];
     [kCircles  addObject:pinField];
     for (int i=0; i<PIN_LENGTH; i++) {
-        pinField = [pinField stringByReplacingCharactersInRange:NSMakeRange(i, 1) withString:@"◉"];
+        pinField = [pinField stringByReplacingCharactersInRange:NSMakeRange(i, 1) withString:@"⚫"];
         [kCircles  addObject:pinField];
     }
+    
+    
 }
 
 - (void)viewDidLoad
@@ -37,19 +50,43 @@ static NSMutableArray * kCircles;
     [super viewDidLoad];
     max = PIN_LENGTH;
     [self renderNumberTextField:PIN_LENGTH];
-    self.identity.text = self.userId;
-    self.titles.text = self.headerTitle;
+    self.lblEmail.text = self.userId;
     self.label.text = [kCircles objectAtIndex:0];
-    self.navigationItem.hidesBackButton = YES;
-    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(back:)];
-    self.navigationItem.leftBarButtonItem = newBackButton;
-
+    [self.pinView setBottomBorder:[[SettingsManager sharedManager] color10] width:2.f alpha:.5f];
 }
 
-- (void) back:(UIBarButtonItem *)sender
+- (void) viewWillAppear:(BOOL)animated
 {
-    [MPin sendPin:1];
+    [super viewWillAppear:animated];
+    self.number = @"";
+    _imgViewDigit0.image = [UIImage imageNamed:@"pin-dot-empty"];
+    _imgViewDigit1.image = [UIImage imageNamed:@"pin-dot-empty"];
+    _imgViewDigit2.image = [UIImage imageNamed:@"pin-dot-empty"];
+    _imgViewDigit3.image = [UIImage imageNamed:@"pin-dot-empty"];
+    
+    [self.menuContainerViewController setPanMode:MFSideMenuPanModeNone];
+    
+    BackButton *btnBack = [[BackButton alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    [btnBack setup];
+    
+    if (!_boolShouldShowBackButton)
+    {
+        self.navigationItem.hidesBackButton = YES;
+        self.navigationItem.leftBarButtonItem = nil;
+    }
+    else
+    {
+        self.navigationItem.hidesBackButton = NO;
+        self.navigationItem.leftBarButtonItem = btnBack;
+    }
+}
+
+- (IBAction) back:(UIBarButtonItem *)sender
+{
+    
+    [MPin sendPin:kEmptyStr];
     [self.navigationController popViewControllerAnimated:YES];
+   
 }
 
 -(void) viewWillDisappear:(BOOL)animated
@@ -58,19 +95,61 @@ static NSMutableArray * kCircles;
     
 }
 - (IBAction)logInAction:(id)sender {
-    int int_pin = [self.number intValue];
-    [MPin sendPin:int_pin];
+    [MPin sendPin:self.number];
     [self.navigationController popViewControllerAnimated:NO];
 }
 
 - (IBAction)clearAction:(id)sender {
     [super clearAction:sender];
+    _imgViewDigit0.image = [UIImage imageNamed:@"pin-dot-empty"];
+    _imgViewDigit1.image = [UIImage imageNamed:@"pin-dot-empty"];
+    _imgViewDigit2.image = [UIImage imageNamed:@"pin-dot-empty"];
+    _imgViewDigit3.image = [UIImage imageNamed:@"pin-dot-empty"];
+
     self.label.text = kCircles[numberIndex];
 }
 
+
 - (IBAction)numberSelectedAction:(id)sender {
+    NSLog(@"Number: %@",self.number);
     [super numberSelectedAction:sender];
-     self.label.text = kCircles[numberIndex];
+
+    switch ([self.number length]) {
+        case 0:
+            _imgViewDigit0.image = [UIImage imageNamed:@"pin-dot-empty"];
+            _imgViewDigit1.image = [UIImage imageNamed:@"pin-dot-empty"];
+            _imgViewDigit2.image = [UIImage imageNamed:@"pin-dot-empty"];
+            _imgViewDigit3.image = [UIImage imageNamed:@"pin-dot-empty"];
+            break;
+        case 1:
+            _imgViewDigit0.image = [UIImage imageNamed:@"pin-dot-full"];
+            _imgViewDigit1.image = [UIImage imageNamed:@"pin-dot-empty"];
+            _imgViewDigit2.image = [UIImage imageNamed:@"pin-dot-empty"];
+            _imgViewDigit3.image = [UIImage imageNamed:@"pin-dot-empty"];
+            break;
+        case 2:
+            _imgViewDigit0.image = [UIImage imageNamed:@"pin-dot-full"];
+            _imgViewDigit1.image = [UIImage imageNamed:@"pin-dot-full"];
+            _imgViewDigit2.image = [UIImage imageNamed:@"pin-dot-empty"];
+            _imgViewDigit3.image = [UIImage imageNamed:@"pin-dot-empty"];
+            break;
+        case 3:
+            _imgViewDigit0.image = [UIImage imageNamed:@"pin-dot-full"];
+            _imgViewDigit1.image = [UIImage imageNamed:@"pin-dot-full"];
+            _imgViewDigit2.image = [UIImage imageNamed:@"pin-dot-full"];
+            _imgViewDigit3.image = [UIImage imageNamed:@"pin-dot-empty"];
+            break;
+        case 4:
+            _imgViewDigit0.image = [UIImage imageNamed:@"pin-dot-full"];
+            _imgViewDigit1.image = [UIImage imageNamed:@"pin-dot-full"];
+            _imgViewDigit2.image = [UIImage imageNamed:@"pin-dot-full"];
+            _imgViewDigit3.image = [UIImage imageNamed:@"pin-dot-full"];
+            break;
+        default:
+            break;
+    }
+    
 }
+
 
 @end

@@ -22,6 +22,7 @@
     NSDictionary * data = [NSDictionary  dictionaryWithObjectsAndKeys:  self.url.text, kRPSURL,
                            [NSNumber numberWithBool:[self.otp isOn]], kIS_OTP,
                            [NSNumber numberWithBool:[self.an isOn]], kIS_ACCESS_NUMBER,
+                           [NSNumber numberWithBool:[self.devName isOn]], kIS_DN,
                            nil];
     [self.settings replaceObjectAtIndex:self.cellIndex withObject:data];
 }
@@ -31,8 +32,9 @@
     self.cellIndex = index;
     NSDictionary * data = [settings objectAtIndex:index];
     self.url.text = [data objectForKey:kRPSURL];
-    [self.otp setOn:[[data objectForKey:kIS_OTP] boolValue ]];
-    [self.an setOn:[[data objectForKey:kIS_ACCESS_NUMBER] boolValue ]];
+    [self.otp       setOn:[[data objectForKey:kIS_OTP] boolValue]];
+    [self.an        setOn:[[data objectForKey:kIS_ACCESS_NUMBER] boolValue]];
+    [self.devName   setOn:[[data objectForKey:kIS_DN] boolValue]];
 }
 
 -(IBAction)onOTPValueChanged:(id)sender {
@@ -42,6 +44,10 @@
 -(IBAction)onAccessNumberValueChanged:(id)sender {
     if([self.an isOn] && [self.otp isOn])       [self.otp setOn:NO];
     [self resetData];
+}
+
+-(IBAction)onDeviceNameValueChanged:(id)sender {
+     [self resetData];
 }
 
 @end

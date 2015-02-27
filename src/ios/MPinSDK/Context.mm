@@ -17,7 +17,7 @@ typedef net::HTTPConnector HttpRequest;
 Context* Context::m_pInstance = NULL;
     
 static NSCondition * cLock;
-static int pin;
+static String pin;
 
     
 Context * Context::Instance() {
@@ -29,7 +29,7 @@ Context * Context::Instance() {
 
 Context::Context() {
 	cLock = [[NSCondition alloc] init];
-    pin = -1;
+    pin = kNegativeString;
     m_pIstorageSecure = new Storage(true);
 	m_pIstorageNonSecure = new Storage(false);
 }
@@ -69,24 +69,24 @@ Context::~Context() {
 	RELEASE(m_pInstance)
 }
     
-void Context::setPin(int mpin) {
+void Context::setPin(const String & mpin) {
     [cLock lock];
     pin = mpin;
     [cLock signal];
     [cLock unlock];
 }
 
-int Context::Show() {
+String Context::Show() {
     dispatch_async(dispatch_get_main_queue(),^{
         [[NSNotificationCenter defaultCenter] postNotificationName:kShowPinPadNotification object:nil];
     });
     
     [cLock lock];
-    while ( pin == -1) {
+    while ( pin.compare(kNegativeString) == 0) {
         [cLock wait];
     }
-    int _pin = pin;
-    pin = -1;
+    String _pin = pin;
+    pin = kNegativeString;
     [cLock unlock];
     return _pin;
 }

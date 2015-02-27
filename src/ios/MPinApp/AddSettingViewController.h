@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface AddSettingViewController : UIViewController <UITextFieldDelegate>
+@interface AddSettingViewController : BaseViewController <UITextFieldDelegate>
 
-@property (nonatomic, weak) IBOutlet UITextField * url;
-@property(nonatomic,weak) IBOutlet UISwitch * otp;
-@property(nonatomic,weak) IBOutlet UISwitch * an;
+@property (nonatomic, weak) IBOutlet UITextField *txtName;
+@property (nonatomic, weak) IBOutlet UITextField *txtURL;
 @property (nonatomic,assign) NSMutableArray * confSettings;
 
 -(IBAction)onSave:(id)sender;

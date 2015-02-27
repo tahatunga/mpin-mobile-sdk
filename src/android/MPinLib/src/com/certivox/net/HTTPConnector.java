@@ -61,7 +61,7 @@ public class HTTPConnector implements IHTTPRequest {
 	}
 	
 	protected String sendRequest( String serviceURL,  String http_method, String requestBody, Hashtable<String, String> requestProperties) throws IOException, HTTPErrorException {
-
+		
 		HttpURLConnection connection = null;
 		DataOutputStream dos = null;
 		String response =  "200 OK";
@@ -102,7 +102,7 @@ public class HTTPConnector implements IHTTPRequest {
 			}
 			
 			if ((statusCode != 204) && (statusCode != 200) && (statusCode != 201)) {
-				Log.e("CV", "Error code: " + statusCode);
+				Log.e("CV", "Error code: " + statusCode + " from " + serviceURL);
 				throw new HTTPErrorException(toString(connection.getErrorStream()), statusCode);
 			}
 					

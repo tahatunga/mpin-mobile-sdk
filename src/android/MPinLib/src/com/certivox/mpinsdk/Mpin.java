@@ -31,15 +31,27 @@ public class Mpin implements Closeable {
 	}
 	
 	public User MakeNewUser(String id) {
-		return nMakeNewUser(mPtr, id);
+		return nMakeNewUser(mPtr, id, "");
+	}
+	
+	public User MakeNewUser(String id, String deviceName) {
+		return nMakeNewUser(mPtr, id, deviceName);
 	}
 	
 	public Status StartRegistration(User user) {
-		return nStartRegistration(mPtr, user);
+		return nStartRegistration(mPtr, user, "");
+	}
+	
+	public Status StartRegistration(User user, String userData) {
+		return nStartRegistration(mPtr, user, userData);
 	}
 	
 	public Status RestartRegistration(User user) {
-		return nRestartRegistration(mPtr, user);
+		return nRestartRegistration(mPtr, user, "");
+	}
+	
+	public Status RestartRegistration(User user, String userData) {
+		return nRestartRegistration(mPtr, user, userData);
 	}
 	
 	public Status FinishRegistration(User user) {
@@ -87,20 +99,28 @@ public class Mpin implements Closeable {
 	}
 	
 	public Status TestBackend(String backend) {
-		return nTestBackend(mPtr, backend);
+		return nTestBackend(mPtr, backend, "");
+	}
+	
+	public Status TestBackend(String backend, String rpsPrefix) {
+		return nTestBackend(mPtr, backend, rpsPrefix);
 	}
 	
 	public Status SetBackend(String backend) {
-		return nSetBackend(mPtr, backend);
+		return nSetBackend(mPtr, backend, "rps");
+	}
+	
+	public Status SetBackend(String backend, String rpsPrefix) {
+		return nSetBackend(mPtr, backend, rpsPrefix);
 	}
 	
 	private long mPtr;
 	
 	private native long nConstruct(Context context, Map<String, String> config);
 	private native void nDestruct(long ptr);
-	private native User nMakeNewUser(long ptr, String id);
-	private native Status nStartRegistration(long ptr, User user);
-	private native Status nRestartRegistration(long ptr, User user);
+	private native User nMakeNewUser(long ptr, String id, String deviceName);
+	private native Status nStartRegistration(long ptr, User user, String userData);
+	private native Status nRestartRegistration(long ptr, User user, String userData);
 	private native Status nFinishRegistration(long ptr, User user);
 	private native Status nAuthenticate(long ptr, User user);
 	private native Status nAuthenticateOtp(long ptr, User user, OTP otp);
@@ -111,6 +131,6 @@ public class Mpin implements Closeable {
 	private native void nListUsers(long ptr, List<User> users);
 	private native boolean nCanLogout(long ptr, User user);
 	private native boolean nLogout(long ptr, User user);
-	private native Status nTestBackend(long ptr, String backend);
-	private native Status nSetBackend(long ptr, String backend);
+	private native Status nTestBackend(long ptr, String backend, String rpsPrefix);
+	private native Status nSetBackend(long ptr, String backend, String rpsPrefix);
 }

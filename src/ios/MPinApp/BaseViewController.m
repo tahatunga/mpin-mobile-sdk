@@ -8,109 +8,104 @@
 
 #import "BaseViewController.h"
 #import "PinPadViewController.h"
+#import "ConfirmEmailViewController.h"
 #import "Constants.h"
-#import "ATMHud.h"
+#import "IdentityCreatedViewController.h"
 
-static NSString * const kConfirm = @"I confirmed my email";
-static NSString * const kResend = @"Resend confirmation e-mail";
-static NSString * const kGotoIdList = @"Go to the identities list";
+static NSString* const kConfirm = @"I confirmed my email";
+static NSString* const kResend = @"Resend confirmation e-mail";
+static NSString* const kGotoIdList = @"Go to the identities list";
 
-@interface BaseViewController ()
-{
-    ATMHud *hud;
+@interface BaseViewController () {
+    
 }
+@property (nonatomic, weak) IBOutlet UIButton  *btnAdd;
+
 @end
 
 @implementation BaseViewController
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.activity.hidden = YES;
-    pinpadHeaderTitle = kSetupPin;
     
+    themeManager = [[ThemeManager alloc] init];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    pinpadHeaderTitle = kSetupPin;
     hud = [[ATMHud alloc] initWithDelegate:self];
     [hud setActivity:YES];
     
+    strBuildNumber  = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    strAppVersion   = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    strSDKVersion   = @"";
+
 }
 
-- (void)didReceiveMemoryWarning
+- (void)startLoading    {   [hud showInView:self.view];     }
+- (void)stopLoading     {   [hud hide];                     }
+
+- (void)finishRegistration:(id<IUser>)iuser
 {
-    [super didReceiveMemoryWarning];
-    self.addButton = nil;
-    self.activity = nil;
-}
+    [self startLoading];
 
--(void) startLoading {
-    
-    [hud showInView:self.view];
-
-}
-
--(void) stopLoading {
-    
-    [hud hide];
-}
-
--(void) finishRegistration:(id<IUser>) iuser {
     currentUser = iuser;
-    MpinStatus * s = [MPin FinishRegistration:iuser];
-    [self performSelectorOnMainThread:@selector(onFinishRegistration:) withObject:s waitUntilDone:NO];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+       
+        
+        MpinStatus* mpinStatus = [MPin FinishRegistration:iuser];
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [self onFinishRegistration:mpinStatus ];
+        });
+    });
 }
 
--(void) onFinishRegistration:(MpinStatus*) mpinStatus {
-    NSString * status = [mpinStatus getStatusCodeAsString];
-    NSString * description = mpinStatus.errorMessage;
-    UIAlertView *alert = nil;
-    if(mpinStatus.status == NETWORK_ERROR) {
-        alert = [[UIAlertView alloc] initWithTitle:@"Setup new identity..."
-                                           message:[NSString stringWithFormat:@"Your M-Pin identity:\n %s \n has not been activated via the M-Pin email we send you.",
-                                                    [[currentUser getIdentity] UTF8String]]
-                                          delegate:self
-                                 cancelButtonTitle:kGotoIdList
-                                 otherButtonTitles:kConfirm, kResend, nil];
-        alert.tag = USER_ACTIVATION_REQUIRED;
-    } else {
-        alert = [[UIAlertView alloc] initWithTitle:status message:description delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
-        if(mpinStatus.status == OK)     alert.tag = SUCCESSFUL_AUTHENTICATION;
-    }
 
-    [alert show];
+- (void)onFinishRegistration:(MpinStatus*)mpinStatus {
+
+    if (mpinStatus.status == IDENTITY_NOT_VERIFIED) {
+        [self showConfirmationScreen:currentUser];
+    } else {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+        IdentityCreatedViewController *vcIDCreated = (IdentityCreatedViewController *)[storyboard instantiateViewControllerWithIdentifier:@"IdentityCreatedViewController"];
+        vcIDCreated.strEmail = [currentUser getIdentity];
+        [self stopLoading];
+        [self.navigationController pushViewController:vcIDCreated animated:YES];
+
+    }
     [self stopLoading];
 }
 
+/// TODO to be removed later when we have new design
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if(alertView.tag == USER_ACTIVATION_REQUIRED) {
-        if(buttonIndex == ICONFIRM) {
-            [self startLoading];
-            [self performSelectorInBackground:@selector(finishRegistration:) withObject:currentUser];
-            return;
-        }
-        if(buttonIndex == RESEND) {
-            [self startLoading];
-            [self performSelectorInBackground:@selector(sendReactivationEmail:) withObject:currentUser];
-            return;
-        }
-    } 
 }
 
--(void) sendReactivationEmail:(id<IUser>) iuser {
-    currentUser = iuser;
-    MpinStatus * s = [MPin RestartRegistration:iuser];
-    [self performSelectorOnMainThread:@selector(onFinishRegistration:) withObject:s waitUntilDone:NO];
-}
-
-- (void) showPinPad {
+- (void) showConfirmationScreen:(id<IUser>) iuser {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    PinPadViewController * pinpadViewController = [storyboard instantiateViewControllerWithIdentifier:@"pinpad"];
+    ConfirmEmailViewController *cevc = (ConfirmEmailViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ConfirmEmailViewController"];
+    cevc.iuser = iuser;
+    [self stopLoading];
+    [self.navigationController pushViewController:cevc animated:YES];
+}
+
+- (void)showPinPad
+{
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    PinPadViewController* pinpadViewController = [storyboard instantiateViewControllerWithIdentifier:@"pinpad"];
     pinpadViewController.userId = [currentUser getIdentity];
-    pinpadViewController.headerTitle = pinpadHeaderTitle;
+    if ([pinpadHeaderTitle isEqualToString:kSetupPin])
+    {
+        pinpadViewController.boolShouldShowBackButton = NO;
+    }
+    else
+    {
+        pinpadViewController.boolShouldShowBackButton = YES;
+    }
+    pinpadViewController.title = pinpadHeaderTitle;
     [self.navigationController pushViewController:pinpadViewController animated:NO];
 }
 
-- (void)viewDidAppear:(BOOL)animated {      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPinPad) name:kShowPinPadNotification object:nil];     }
-- (void) viewDidDisappear:(BOOL)animated {      [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowPinPadNotification object:nil];     }
-
+- (void)viewDidAppear:(BOOL)animated { [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPinPad) name:kShowPinPadNotification object:nil]; }
+- (void)viewDidDisappear:(BOOL)animated { [[NSNotificationCenter defaultCenter] removeObserver:self name:kShowPinPadNotification object:nil]; }
+- (IBAction)showLeftMenuPressed:(id)sender  {    [self.menuContainerViewController toggleLeftSideMenuCompletion:nil];   }
 @end

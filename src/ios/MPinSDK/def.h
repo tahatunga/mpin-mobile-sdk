@@ -34,6 +34,9 @@ typedef MPinSDK::StringMap StringMap;
 typedef IHttpRequest::Method Method;
 
 
+static const String kEmptyString = "";
+static const String kNegativeString = "-1";
+
 /*
  * Macro to get the elements count in an array. Don't use it on zero-sized arrays
  */

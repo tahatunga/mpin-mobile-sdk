@@ -7,10 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		960172AA1A9B7D6600B0E947 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 960172A91A9B7D6600B0E947 /* Images.xcassets */; };
+		960D6A941A88C0E20068E0F7 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 960D6A811A88C0E20068E0F7 /* OpenSans-Bold.ttf */; };
+		960D6A951A88C0E20068E0F7 /* OpenSans-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 960D6A821A88C0E20068E0F7 /* OpenSans-BoldItalic.ttf */; };
+		960D6A961A88C0E20068E0F7 /* OpenSans-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 960D6A831A88C0E20068E0F7 /* OpenSans-ExtraBold.ttf */; };
+		960D6A971A88C0E20068E0F7 /* OpenSans-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 960D6A841A88C0E20068E0F7 /* OpenSans-ExtraBoldItalic.ttf */; };
+		960D6A981A88C0E20068E0F7 /* OpenSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 960D6A851A88C0E20068E0F7 /* OpenSans-Italic.ttf */; };
+		960D6A991A88C0E20068E0F7 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 960D6A861A88C0E20068E0F7 /* OpenSans-Light.ttf */; };
+		960D6A9A1A88C0E20068E0F7 /* OpenSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 960D6A871A88C0E20068E0F7 /* OpenSans-LightItalic.ttf */; };
+		960D6A9B1A88C0E20068E0F7 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 960D6A881A88C0E20068E0F7 /* OpenSans-Regular.ttf */; };
+		960D6A9C1A88C0E20068E0F7 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 960D6A891A88C0E20068E0F7 /* OpenSans-Semibold.ttf */; };
+		960D6A9D1A88C0E20068E0F7 /* OpenSans-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 960D6A8A1A88C0E20068E0F7 /* OpenSans-SemiboldItalic.ttf */; };
+		960D6AA31A88C0E20068E0F7 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 960D6A901A88C0E20068E0F7 /* Settings.bundle */; };
+		960D6AA91A88F1BF0068E0F7 /* Colors.plist in Resources */ = {isa = PBXBuildFile; fileRef = 960D6AA81A88F1BF0068E0F7 /* Colors.plist */; };
+		9614F8CF1A9E1EC500337080 /* AccountSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9614F8CE1A9E1EC500337080 /* AccountSummaryViewController.m */; };
+		961957461A960E9900C93604 /* ThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 961957451A960E9900C93604 /* ThemeManager.m */; };
+		961957491A97276100C93604 /* ConfigListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 961957481A97276100C93604 /* ConfigListTableViewCell.m */; };
+		963B83E71A84E7C6007623E0 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 963B83E61A84E7C6007623E0 /* MenuViewController.m */; };
+		964B121D1A93921C00FFB67A /* BackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 964B121C1A93921C00FFB67A /* BackButton.m */; };
+		966EB9D41A8CF069004B936A /* ConfirmEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 966EB9D31A8CF069004B936A /* ConfirmEmailViewController.m */; };
+		9672E30F1A89FAF400C0658A /* SettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9672E30E1A89FAF400C0658A /* SettingsManager.m */; };
 		968CF31B1A77BB31002C4347 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 968CF31A1A77BB31002C4347 /* LaunchScreen.xib */; };
 		968D0A441A7B93C00037841D /* UIColor+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 968D0A431A7B93C00037841D /* UIColor+Helper.m */; };
+		968E7A541AA06CA700A276A7 /* IdentityCreatedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 968E7A531AA06CA700A276A7 /* IdentityCreatedViewController.m */; };
+		968E7A571AA0818F00A276A7 /* MenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 968E7A561AA0818F00A276A7 /* MenuTableViewCell.m */; };
+		96A9C7271A84F03200294F3B /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9C7261A84F03200294F3B /* AboutViewController.m */; };
 		C1A44EE9BAB1DEBF8C368A7C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B8967D6B49D70B9963207D4 /* libPods.a */; };
-		FE12D0301A50149000789091 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FE12D02F1A50149000789091 /* Settings.bundle */; };
 		FE148D3F1A2F0FB7007E83EF /* Constants.h in Resources */ = {isa = PBXBuildFile; fileRef = FE148D3C1A2F0FB7007E83EF /* Constants.h */; };
 		FE148D401A2F0FB7007E83EF /* MPin.h in Resources */ = {isa = PBXBuildFile; fileRef = FE148D3D1A2F0FB7007E83EF /* MPin.h */; };
 		FE148D411A2F0FB7007E83EF /* MpinStatus.h in Resources */ = {isa = PBXBuildFile; fileRef = FE148D3E1A2F0FB7007E83EF /* MpinStatus.h */; };
@@ -18,19 +40,14 @@
 		FE148D6B1A2F13D0007E83EF /* AddIdentityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE148D5E1A2F13D0007E83EF /* AddIdentityViewController.m */; };
 		FE148D6C1A2F13D0007E83EF /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = FE148D601A2F13D0007E83EF /* AppDelegate.mm */; };
 		FE148D6D1A2F13D0007E83EF /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE148D621A2F13D0007E83EF /* BaseViewController.m */; };
-		FE148D6E1A2F13D0007E83EF /* GraphicUtill.m in Sources */ = {isa = PBXBuildFile; fileRef = FE148D641A2F13D0007E83EF /* GraphicUtill.m */; };
 		FE148D6F1A2F13D0007E83EF /* PinPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE148D661A2F13D0007E83EF /* PinPadViewController.m */; };
 		FE148D701A2F13D0007E83EF /* UserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE148D681A2F13D0007E83EF /* UserListViewController.m */; };
-		FE3336D21A24C99A00F72054 /* active.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3336CF1A24C99A00F72054 /* active.png */; };
-		FE3336D31A24C99A00F72054 /* inactive.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3336D01A24C99A00F72054 /* inactive.png */; };
-		FE3336D41A24C99A00F72054 /* problem.png in Resources */ = {isa = PBXBuildFile; fileRef = FE3336D11A24C99A00F72054 /* problem.png */; };
 		FE49001B1A1A3CEB000030A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE49001A1A1A3CEB000030A4 /* Foundation.framework */; };
 		FE49001D1A1A3CEB000030A4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE49001C1A1A3CEB000030A4 /* CoreGraphics.framework */; };
 		FE49001F1A1A3CEB000030A4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE49001E1A1A3CEB000030A4 /* UIKit.framework */; };
 		FE4900251A1A3CEB000030A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FE4900231A1A3CEB000030A4 /* InfoPlist.strings */; };
 		FE4900271A1A3CEB000030A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4900261A1A3CEB000030A4 /* main.m */; };
 		FE4900311A1A3CEB000030A4 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE49002F1A1A3CEB000030A4 /* Main_iPad.storyboard */; };
-		FE4900361A1A3CEB000030A4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE4900351A1A3CEB000030A4 /* Images.xcassets */; };
 		FE49003D1A1A3CEB000030A4 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE49003C1A1A3CEB000030A4 /* XCTest.framework */; };
 		FE49003E1A1A3CEB000030A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE49001A1A1A3CEB000030A4 /* Foundation.framework */; };
 		FE49003F1A1A3CEB000030A4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE49001E1A1A3CEB000030A4 /* UIKit.framework */; };
@@ -38,13 +55,11 @@
 		FE4900491A1A3CEB000030A4 /* MPinAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4900481A1A3CEB000030A4 /* MPinAppTests.m */; };
 		FE4AEB051A443137000B3181 /* OTPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4AEB041A443137000B3181 /* OTPViewController.m */; };
 		FE4AEB081A443E4C000B3181 /* CycleProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4AEB071A443E4C000B3181 /* CycleProgressBar.m */; };
-		FE4AEB0C1A445102000B3181 /* certivox-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4AEB091A445102000B3181 /* certivox-logo.png */; };
-		FE4AEB0D1A445102000B3181 /* home_white.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4AEB0A1A445102000B3181 /* home_white.png */; };
-		FE4AEB0E1A445102000B3181 /* m-pin-logo-strong.png in Resources */ = {isa = PBXBuildFile; fileRef = FE4AEB0B1A445102000B3181 /* m-pin-logo-strong.png */; };
 		FE72C3451A6E519D0082F14D /* SettingsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE72C3441A6E519D0082F14D /* SettingsViewCell.m */; };
 		FE72C3481A6EA6960082F14D /* AddSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE72C3471A6EA6960082F14D /* AddSettingViewController.m */; };
 		FEB901681A6D28550053DE92 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB901671A6D28550053DE92 /* SettingsViewController.m */; };
-		FEFA500B1A714313002D6E24 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = FEFA500A1A714313002D6E24 /* settings.png */; };
+		FED7691D1A8B4A30005A3ECA /* UIViewController+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = FED7691C1A8B4A30005A3ECA /* UIViewController+Helper.m */; };
+		FEDDDE311A89F93E00E2068C /* UIView+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDDDE301A89F93E00E2068C /* UIView+Helper.m */; };
 		FEFA500E1A7143DB002D6E24 /* AccessNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFA500D1A7143DB002D6E24 /* AccessNumberViewController.m */; };
 		FEFA50111A7148E5002D6E24 /* DigitPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEFA50101A7148E5002D6E24 /* DigitPadViewController.m */; };
 		FEFFDDF21A1A4268007C7CAA /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEFFDDF01A1A4268007C7CAA /* Main_iPhone.storyboard */; };
@@ -65,10 +80,42 @@
 		424F5ACA40BA9B3F96DAFF57 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		4A273B391E35D7265DFB7EB0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		4B8967D6B49D70B9963207D4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		960172A91A9B7D6600B0E947 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		960D6A811A88C0E20068E0F7 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
+		960D6A821A88C0E20068E0F7 /* OpenSans-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-BoldItalic.ttf"; sourceTree = "<group>"; };
+		960D6A831A88C0E20068E0F7 /* OpenSans-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBold.ttf"; sourceTree = "<group>"; };
+		960D6A841A88C0E20068E0F7 /* OpenSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		960D6A851A88C0E20068E0F7 /* OpenSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Italic.ttf"; sourceTree = "<group>"; };
+		960D6A861A88C0E20068E0F7 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
+		960D6A871A88C0E20068E0F7 /* OpenSans-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-LightItalic.ttf"; sourceTree = "<group>"; };
+		960D6A881A88C0E20068E0F7 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
+		960D6A891A88C0E20068E0F7 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
+		960D6A8A1A88C0E20068E0F7 /* OpenSans-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-SemiboldItalic.ttf"; sourceTree = "<group>"; };
+		960D6A901A88C0E20068E0F7 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		960D6AA81A88F1BF0068E0F7 /* Colors.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Colors.plist; sourceTree = "<group>"; };
+		9614F8CD1A9E1EC500337080 /* AccountSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccountSummaryViewController.h; path = ../../../../src/ios/MPinApp/AccountSummaryViewController.h; sourceTree = "<group>"; };
+		9614F8CE1A9E1EC500337080 /* AccountSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccountSummaryViewController.m; path = ../../../../src/ios/MPinApp/AccountSummaryViewController.m; sourceTree = "<group>"; };
+		961957441A960E9900C93604 /* ThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThemeManager.h; path = ../../../../src/ios/MPinApp/ThemeManager.h; sourceTree = "<group>"; };
+		961957451A960E9900C93604 /* ThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ThemeManager.m; path = ../../../../src/ios/MPinApp/ThemeManager.m; sourceTree = "<group>"; };
+		961957471A97276100C93604 /* ConfigListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfigListTableViewCell.h; path = ../../../../src/ios/MPinApp/ConfigListTableViewCell.h; sourceTree = "<group>"; };
+		961957481A97276100C93604 /* ConfigListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConfigListTableViewCell.m; path = ../../../../src/ios/MPinApp/ConfigListTableViewCell.m; sourceTree = "<group>"; };
+		963B83E51A84E7C6007623E0 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		963B83E61A84E7C6007623E0 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		964B121B1A93921C00FFB67A /* BackButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BackButton.h; path = ../../../../src/ios/MPinApp/BackButton.h; sourceTree = "<group>"; };
+		964B121C1A93921C00FFB67A /* BackButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BackButton.m; path = ../../../../src/ios/MPinApp/BackButton.m; sourceTree = "<group>"; };
+		966EB9D21A8CF069004B936A /* ConfirmEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConfirmEmailViewController.h; path = ../../../../src/ios/MPinApp/ConfirmEmailViewController.h; sourceTree = "<group>"; };
+		966EB9D31A8CF069004B936A /* ConfirmEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConfirmEmailViewController.m; path = ../../../../src/ios/MPinApp/ConfirmEmailViewController.m; sourceTree = "<group>"; };
+		9672E30D1A89FAF400C0658A /* SettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsManager.h; sourceTree = "<group>"; };
+		9672E30E1A89FAF400C0658A /* SettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsManager.m; sourceTree = "<group>"; };
 		968CF31A1A77BB31002C4347 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		968D0A421A7B93C00037841D /* UIColor+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Helper.h"; sourceTree = "<group>"; };
 		968D0A431A7B93C00037841D /* UIColor+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Helper.m"; sourceTree = "<group>"; };
-		FE12D02F1A50149000789091 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ../Settings.bundle; sourceTree = "<group>"; };
+		968E7A521AA06CA700A276A7 /* IdentityCreatedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IdentityCreatedViewController.h; path = ../../../../src/ios/MPinApp/IdentityCreatedViewController.h; sourceTree = "<group>"; };
+		968E7A531AA06CA700A276A7 /* IdentityCreatedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IdentityCreatedViewController.m; path = ../../../../src/ios/MPinApp/IdentityCreatedViewController.m; sourceTree = "<group>"; };
+		968E7A551AA0818F00A276A7 /* MenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuTableViewCell.h; path = ../../../../src/ios/MPinApp/MenuTableViewCell.h; sourceTree = "<group>"; };
+		968E7A561AA0818F00A276A7 /* MenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuTableViewCell.m; path = ../../../../src/ios/MPinApp/MenuTableViewCell.m; sourceTree = "<group>"; };
+		96A9C7251A84F03200294F3B /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		96A9C7261A84F03200294F3B /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		FE148D3C1A2F0FB7007E83EF /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../../../src/ios/MPinSDK/Constants.h; sourceTree = "<group>"; };
 		FE148D3D1A2F0FB7007E83EF /* MPin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MPin.h; path = ../../../src/ios/MPinSDK/MPin.h; sourceTree = "<group>"; };
 		FE148D3E1A2F0FB7007E83EF /* MpinStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MpinStatus.h; path = ../../../src/ios/MPinSDK/MpinStatus.h; sourceTree = "<group>"; };
@@ -79,16 +126,11 @@
 		FE148D601A2F13D0007E83EF /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = ../../../../src/ios/MPinApp/AppDelegate.mm; sourceTree = "<group>"; };
 		FE148D611A2F13D0007E83EF /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseViewController.h; path = ../../../../src/ios/MPinApp/BaseViewController.h; sourceTree = "<group>"; };
 		FE148D621A2F13D0007E83EF /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseViewController.m; path = ../../../../src/ios/MPinApp/BaseViewController.m; sourceTree = "<group>"; };
-		FE148D631A2F13D0007E83EF /* GraphicUtill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GraphicUtill.h; path = ../../../../src/ios/MPinApp/GraphicUtill.h; sourceTree = "<group>"; };
-		FE148D641A2F13D0007E83EF /* GraphicUtill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GraphicUtill.m; path = ../../../../src/ios/MPinApp/GraphicUtill.m; sourceTree = "<group>"; };
 		FE148D651A2F13D0007E83EF /* PinPadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinPadViewController.h; path = ../../../../src/ios/MPinApp/PinPadViewController.h; sourceTree = "<group>"; };
 		FE148D661A2F13D0007E83EF /* PinPadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PinPadViewController.m; path = ../../../../src/ios/MPinApp/PinPadViewController.m; sourceTree = "<group>"; };
 		FE148D671A2F13D0007E83EF /* UserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserListViewController.h; path = ../../../../src/ios/MPinApp/UserListViewController.h; sourceTree = "<group>"; };
 		FE148D681A2F13D0007E83EF /* UserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserListViewController.m; path = ../../../../src/ios/MPinApp/UserListViewController.m; sourceTree = "<group>"; };
-		FE3336CF1A24C99A00F72054 /* active.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = active.png; sourceTree = "<group>"; };
-		FE3336D01A24C99A00F72054 /* inactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inactive.png; sourceTree = "<group>"; };
-		FE3336D11A24C99A00F72054 /* problem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = problem.png; sourceTree = "<group>"; };
-		FE4900171A1A3CEB000030A4 /* MPinApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MPinApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE4900171A1A3CEB000030A4 /* CertiVox M-Pin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CertiVox M-Pin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE49001A1A1A3CEB000030A4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FE49001C1A1A3CEB000030A4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		FE49001E1A1A3CEB000030A4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -97,7 +139,6 @@
 		FE4900261A1A3CEB000030A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FE4900281A1A3CEB000030A4 /* MPinApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MPinApp-Prefix.pch"; sourceTree = "<group>"; };
 		FE4900301A1A3CEB000030A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		FE4900351A1A3CEB000030A4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FE49003B1A1A3CEB000030A4 /* MPinAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MPinAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE49003C1A1A3CEB000030A4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		FE4900441A1A3CEB000030A4 /* MPinAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MPinAppTests-Info.plist"; sourceTree = "<group>"; };
@@ -108,9 +149,6 @@
 		FE4AEB041A443137000B3181 /* OTPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OTPViewController.m; path = ../../../../src/ios/MPinApp/OTPViewController.m; sourceTree = "<group>"; };
 		FE4AEB061A443E4C000B3181 /* CycleProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CycleProgressBar.h; path = ../../../../src/ios/MPinApp/CycleProgressBar.h; sourceTree = "<group>"; };
 		FE4AEB071A443E4C000B3181 /* CycleProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CycleProgressBar.m; path = ../../../../src/ios/MPinApp/CycleProgressBar.m; sourceTree = "<group>"; };
-		FE4AEB091A445102000B3181 /* certivox-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "certivox-logo.png"; sourceTree = "<group>"; };
-		FE4AEB0A1A445102000B3181 /* home_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_white.png; sourceTree = "<group>"; };
-		FE4AEB0B1A445102000B3181 /* m-pin-logo-strong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "m-pin-logo-strong.png"; sourceTree = "<group>"; };
 		FE72C3431A6E519D0082F14D /* SettingsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewCell.h; path = ../../../../src/ios/MPinApp/SettingsViewCell.h; sourceTree = "<group>"; };
 		FE72C3441A6E519D0082F14D /* SettingsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewCell.m; path = ../../../../src/ios/MPinApp/SettingsViewCell.m; sourceTree = "<group>"; };
 		FE72C3461A6EA6960082F14D /* AddSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddSettingViewController.h; path = ../../../../src/ios/MPinApp/AddSettingViewController.h; sourceTree = "<group>"; };
@@ -118,7 +156,10 @@
 		FEB901661A6D28550053DE92 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = ../../../../src/ios/MPinApp/SettingsViewController.h; sourceTree = "<group>"; };
 		FEB901671A6D28550053DE92 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = ../../../../src/ios/MPinApp/SettingsViewController.m; sourceTree = "<group>"; };
 		FEC5A39A1A446E29006990B5 /* OTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OTP.h; path = ../../../src/ios/MPinSDK/OTP.h; sourceTree = "<group>"; };
-		FEFA500A1A714313002D6E24 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		FED7691B1A8B4A30005A3ECA /* UIViewController+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+Helper.h"; path = "../../../../../src/ios/MPinApp/UIViewController+Helper.h"; sourceTree = "<group>"; };
+		FED7691C1A8B4A30005A3ECA /* UIViewController+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+Helper.m"; path = "../../../../../src/ios/MPinApp/UIViewController+Helper.m"; sourceTree = "<group>"; };
+		FEDDDE2F1A89F93E00E2068C /* UIView+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Helper.h"; path = "../../../../../src/ios/MPinApp/UIView+Helper.h"; sourceTree = "<group>"; };
+		FEDDDE301A89F93E00E2068C /* UIView+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Helper.m"; path = "../../../../../src/ios/MPinApp/UIView+Helper.m"; sourceTree = "<group>"; };
 		FEFA500C1A7143DB002D6E24 /* AccessNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccessNumberViewController.h; path = ../../../../src/ios/MPinApp/AccessNumberViewController.h; sourceTree = "<group>"; };
 		FEFA500D1A7143DB002D6E24 /* AccessNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AccessNumberViewController.m; path = ../../../../src/ios/MPinApp/AccessNumberViewController.m; sourceTree = "<group>"; };
 		FEFA500F1A7148E5002D6E24 /* DigitPadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DigitPadViewController.h; path = ../../../../src/ios/MPinApp/DigitPadViewController.h; sourceTree = "<group>"; };
@@ -162,11 +203,60 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		960D6A7C1A88C0E20068E0F7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				960172A91A9B7D6600B0E947 /* Images.xcassets */,
+				960D6A7F1A88C0E20068E0F7 /* Fonts */,
+				960D6A901A88C0E20068E0F7 /* Settings.bundle */,
+				960D6AA81A88F1BF0068E0F7 /* Colors.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		960D6A7F1A88C0E20068E0F7 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				960D6A801A88C0E20068E0F7 /* Open_Sans */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		960D6A801A88C0E20068E0F7 /* Open_Sans */ = {
+			isa = PBXGroup;
+			children = (
+				960D6A811A88C0E20068E0F7 /* OpenSans-Bold.ttf */,
+				960D6A821A88C0E20068E0F7 /* OpenSans-BoldItalic.ttf */,
+				960D6A831A88C0E20068E0F7 /* OpenSans-ExtraBold.ttf */,
+				960D6A841A88C0E20068E0F7 /* OpenSans-ExtraBoldItalic.ttf */,
+				960D6A851A88C0E20068E0F7 /* OpenSans-Italic.ttf */,
+				960D6A861A88C0E20068E0F7 /* OpenSans-Light.ttf */,
+				960D6A871A88C0E20068E0F7 /* OpenSans-LightItalic.ttf */,
+				960D6A881A88C0E20068E0F7 /* OpenSans-Regular.ttf */,
+				960D6A891A88C0E20068E0F7 /* OpenSans-Semibold.ttf */,
+				960D6A8A1A88C0E20068E0F7 /* OpenSans-SemiboldItalic.ttf */,
+			);
+			path = Open_Sans;
+			sourceTree = "<group>";
+		};
+		9672E30C1A89FAD300C0658A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9672E30D1A89FAF400C0658A /* SettingsManager.h */,
+				9672E30E1A89FAF400C0658A /* SettingsManager.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		968D0A411A7B93C00037841D /* Tools */ = {
 			isa = PBXGroup;
 			children = (
 				968D0A421A7B93C00037841D /* UIColor+Helper.h */,
 				968D0A431A7B93C00037841D /* UIColor+Helper.m */,
+				FEDDDE2F1A89F93E00E2068C /* UIView+Helper.h */,
+				FEDDDE301A89F93E00E2068C /* UIView+Helper.m */,
+				FED7691B1A8B4A30005A3ECA /* UIViewController+Helper.h */,
+				FED7691C1A8B4A30005A3ECA /* UIViewController+Helper.m */,
 			);
 			path = Tools;
 			sourceTree = "<group>";
@@ -191,7 +281,7 @@
 		FE4900181A1A3CEB000030A4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FE4900171A1A3CEB000030A4 /* MPinApp.app */,
+				FE4900171A1A3CEB000030A4 /* CertiVox M-Pin.app */,
 				FE49003B1A1A3CEB000030A4 /* MPinAppTests.xctest */,
 			);
 			name = Products;
@@ -214,7 +304,10 @@
 		FE4900201A1A3CEB000030A4 /* MPinApp */ = {
 			isa = PBXGroup;
 			children = (
+				9672E30C1A89FAD300C0658A /* Utils */,
+				960D6A7C1A88C0E20068E0F7 /* Resources */,
 				968D0A411A7B93C00037841D /* Tools */,
+				FE4900211A1A3CEB000030A4 /* Supporting Files */,
 				FE4AEB061A443E4C000B3181 /* CycleProgressBar.h */,
 				FE4AEB071A443E4C000B3181 /* CycleProgressBar.m */,
 				FE148D5D1A2F13D0007E83EF /* AddIdentityViewController.h */,
@@ -223,8 +316,6 @@
 				FE148D601A2F13D0007E83EF /* AppDelegate.mm */,
 				FE148D611A2F13D0007E83EF /* BaseViewController.h */,
 				FE148D621A2F13D0007E83EF /* BaseViewController.m */,
-				FE148D631A2F13D0007E83EF /* GraphicUtill.h */,
-				FE148D641A2F13D0007E83EF /* GraphicUtill.m */,
 				FEFA500F1A7148E5002D6E24 /* DigitPadViewController.h */,
 				FEFA50101A7148E5002D6E24 /* DigitPadViewController.m */,
 				FE148D651A2F13D0007E83EF /* PinPadViewController.h */,
@@ -235,17 +326,32 @@
 				FE148D681A2F13D0007E83EF /* UserListViewController.m */,
 				FE4AEB031A443137000B3181 /* OTPViewController.h */,
 				FE4AEB041A443137000B3181 /* OTPViewController.m */,
-				FED9C1941A1F68270042B194 /* Resources */,
 				FEFFDDF01A1A4268007C7CAA /* Main_iPhone.storyboard */,
 				FE49002F1A1A3CEB000030A4 /* Main_iPad.storyboard */,
-				FE4900351A1A3CEB000030A4 /* Images.xcassets */,
-				FE4900211A1A3CEB000030A4 /* Supporting Files */,
 				FEB901661A6D28550053DE92 /* SettingsViewController.h */,
 				FEB901671A6D28550053DE92 /* SettingsViewController.m */,
 				FE72C3431A6E519D0082F14D /* SettingsViewCell.h */,
 				FE72C3441A6E519D0082F14D /* SettingsViewCell.m */,
 				FE72C3461A6EA6960082F14D /* AddSettingViewController.h */,
 				FE72C3471A6EA6960082F14D /* AddSettingViewController.m */,
+				963B83E51A84E7C6007623E0 /* MenuViewController.h */,
+				963B83E61A84E7C6007623E0 /* MenuViewController.m */,
+				96A9C7251A84F03200294F3B /* AboutViewController.h */,
+				96A9C7261A84F03200294F3B /* AboutViewController.m */,
+				966EB9D21A8CF069004B936A /* ConfirmEmailViewController.h */,
+				966EB9D31A8CF069004B936A /* ConfirmEmailViewController.m */,
+				964B121B1A93921C00FFB67A /* BackButton.h */,
+				964B121C1A93921C00FFB67A /* BackButton.m */,
+				961957441A960E9900C93604 /* ThemeManager.h */,
+				961957451A960E9900C93604 /* ThemeManager.m */,
+				961957471A97276100C93604 /* ConfigListTableViewCell.h */,
+				961957481A97276100C93604 /* ConfigListTableViewCell.m */,
+				9614F8CD1A9E1EC500337080 /* AccountSummaryViewController.h */,
+				9614F8CE1A9E1EC500337080 /* AccountSummaryViewController.m */,
+				968E7A521AA06CA700A276A7 /* IdentityCreatedViewController.h */,
+				968E7A531AA06CA700A276A7 /* IdentityCreatedViewController.m */,
+				968E7A551AA0818F00A276A7 /* MenuTableViewCell.h */,
+				968E7A561AA0818F00A276A7 /* MenuTableViewCell.m */,
 			);
 			path = MPinApp;
 			sourceTree = "<group>";
@@ -279,21 +385,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		FED9C1941A1F68270042B194 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				FEFA500A1A714313002D6E24 /* settings.png */,
-				FE12D02F1A50149000789091 /* Settings.bundle */,
-				FE4AEB091A445102000B3181 /* certivox-logo.png */,
-				FE4AEB0A1A445102000B3181 /* home_white.png */,
-				FE4AEB0B1A445102000B3181 /* m-pin-logo-strong.png */,
-				FE3336CF1A24C99A00F72054 /* active.png */,
-				FE3336D01A24C99A00F72054 /* inactive.png */,
-				FE3336D11A24C99A00F72054 /* problem.png */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -301,6 +392,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FE49004C1A1A3CEB000030A4 /* Build configuration list for PBXNativeTarget "MPinApp" */;
 			buildPhases = (
+				96A9C7281A84FA6400294F3B /* ShellScript */,
 				A84CFE24885B00EAC61002FD /* Check Pods Manifest.lock */,
 				FE4900131A1A3CEB000030A4 /* Sources */,
 				FE4900141A1A3CEB000030A4 /* Frameworks */,
@@ -313,7 +405,7 @@
 			);
 			name = MPinApp;
 			productName = MPinApp;
-			productReference = FE4900171A1A3CEB000030A4 /* MPinApp.app */;
+			productReference = FE4900171A1A3CEB000030A4 /* CertiVox M-Pin.app */;
 			productType = "com.apple.product-type.application";
 		};
 		FE49003A1A1A3CEB000030A4 /* MPinAppTests */ = {
@@ -343,6 +435,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Certivox;
 				TargetAttributes = {
+					FE4900161A1A3CEB000030A4 = {
+						DevelopmentTeam = WF6XYF7P2L;
+					};
 					FE49003A1A1A3CEB000030A4 = {
 						TestTargetID = FE4900161A1A3CEB000030A4;
 					};
@@ -372,23 +467,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FEFA500B1A714313002D6E24 /* settings.png in Resources */,
+				960D6A941A88C0E20068E0F7 /* OpenSans-Bold.ttf in Resources */,
+				960D6AA31A88C0E20068E0F7 /* Settings.bundle in Resources */,
+				960D6A971A88C0E20068E0F7 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
+				960D6A981A88C0E20068E0F7 /* OpenSans-Italic.ttf in Resources */,
 				FE148D461A2F1007007E83EF /* IUser.h in Resources */,
-				FE4AEB0E1A445102000B3181 /* m-pin-logo-strong.png in Resources */,
 				968CF31B1A77BB31002C4347 /* LaunchScreen.xib in Resources */,
 				FE148D3F1A2F0FB7007E83EF /* Constants.h in Resources */,
+				960D6A9A1A88C0E20068E0F7 /* OpenSans-LightItalic.ttf in Resources */,
+				960D6A951A88C0E20068E0F7 /* OpenSans-BoldItalic.ttf in Resources */,
+				960172AA1A9B7D6600B0E947 /* Images.xcassets in Resources */,
 				FE148D401A2F0FB7007E83EF /* MPin.h in Resources */,
-				FE4AEB0D1A445102000B3181 /* home_white.png in Resources */,
+				960D6A9C1A88C0E20068E0F7 /* OpenSans-Semibold.ttf in Resources */,
+				960D6A991A88C0E20068E0F7 /* OpenSans-Light.ttf in Resources */,
 				FE148D411A2F0FB7007E83EF /* MpinStatus.h in Resources */,
-				FE3336D41A24C99A00F72054 /* problem.png in Resources */,
-				FE12D0301A50149000789091 /* Settings.bundle in Resources */,
+				960D6AA91A88F1BF0068E0F7 /* Colors.plist in Resources */,
 				FEFFDDF21A1A4268007C7CAA /* Main_iPhone.storyboard in Resources */,
-				FE4AEB0C1A445102000B3181 /* certivox-logo.png in Resources */,
-				FE3336D21A24C99A00F72054 /* active.png in Resources */,
-				FE3336D31A24C99A00F72054 /* inactive.png in Resources */,
 				FE4900311A1A3CEB000030A4 /* Main_iPad.storyboard in Resources */,
-				FE4900361A1A3CEB000030A4 /* Images.xcassets in Resources */,
+				960D6A9D1A88C0E20068E0F7 /* OpenSans-SemiboldItalic.ttf in Resources */,
 				FE4900251A1A3CEB000030A4 /* InfoPlist.strings in Resources */,
+				960D6A9B1A88C0E20068E0F7 /* OpenSans-Regular.ttf in Resources */,
+				960D6A961A88C0E20068E0F7 /* OpenSans-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +502,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		96A9C7281A84FA6400294F3B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "bN=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbN=$((bN += 1))\nbN=$(printf \"%d\" $bN)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bN\" \"$INFOPLIST_FILE\"\n";
+		};
 		A84CFE24885B00EAC61002FD /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -440,20 +552,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				966EB9D41A8CF069004B936A /* ConfirmEmailViewController.m in Sources */,
 				FE148D6D1A2F13D0007E83EF /* BaseViewController.m in Sources */,
 				FE4AEB081A443E4C000B3181 /* CycleProgressBar.m in Sources */,
+				9614F8CF1A9E1EC500337080 /* AccountSummaryViewController.m in Sources */,
+				FED7691D1A8B4A30005A3ECA /* UIViewController+Helper.m in Sources */,
 				FE148D6B1A2F13D0007E83EF /* AddIdentityViewController.m in Sources */,
+				964B121D1A93921C00FFB67A /* BackButton.m in Sources */,
+				963B83E71A84E7C6007623E0 /* MenuViewController.m in Sources */,
 				FE148D6F1A2F13D0007E83EF /* PinPadViewController.m in Sources */,
 				FE72C3451A6E519D0082F14D /* SettingsViewCell.m in Sources */,
+				961957461A960E9900C93604 /* ThemeManager.m in Sources */,
 				FE72C3481A6EA6960082F14D /* AddSettingViewController.m in Sources */,
 				FEFA50111A7148E5002D6E24 /* DigitPadViewController.m in Sources */,
 				FE4900271A1A3CEB000030A4 /* main.m in Sources */,
+				96A9C7271A84F03200294F3B /* AboutViewController.m in Sources */,
+				9672E30F1A89FAF400C0658A /* SettingsManager.m in Sources */,
 				FE4AEB051A443137000B3181 /* OTPViewController.m in Sources */,
-				FE148D6E1A2F13D0007E83EF /* GraphicUtill.m in Sources */,
 				FEFA500E1A7143DB002D6E24 /* AccessNumberViewController.m in Sources */,
 				968D0A441A7B93C00037841D /* UIColor+Helper.m in Sources */,
+				961957491A97276100C93604 /* ConfigListTableViewCell.m in Sources */,
+				FEDDDE311A89F93E00E2068C /* UIView+Helper.m in Sources */,
+				968E7A541AA06CA700A276A7 /* IdentityCreatedViewController.m in Sources */,
 				FEB901681A6D28550053DE92 /* SettingsViewController.m in Sources */,
 				FE148D6C1A2F13D0007E83EF /* AppDelegate.mm in Sources */,
+				968E7A571AA0818F00A276A7 /* MenuTableViewCell.m in Sources */,
 				FE148D701A2F13D0007E83EF /* UserListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -590,13 +713,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MPinApp/MPinApp-Prefix.pch";
 				INFOPLIST_FILE = "MPinApp/MPinApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "CertiVox M-Pin";
 				USER_HEADER_SEARCH_PATHS = "../**";
+				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -607,13 +733,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CURRENT_PROJECT_VERSION = 1;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MPinApp/MPinApp-Prefix.pch";
 				INFOPLIST_FILE = "MPinApp/MPinApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "CertiVox M-Pin";
+				PROVISIONING_PROFILE = "";
 				USER_HEADER_SEARCH_PATHS = "../**";
+				VERSIONING_SYSTEM = "apple-generic";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -621,7 +751,7 @@
 		FE4900501A1A3CEB000030A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MPinApp.app/MPinApp";
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -636,7 +766,7 @@
 				);
 				INFOPLIST_FILE = "MPinAppTests/MPinAppTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CertiVox M-Pin.app/CertiVox M-Pin";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -644,7 +774,7 @@
 		FE4900511A1A3CEB000030A4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/MPinApp.app/MPinApp";
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -655,7 +785,7 @@
 				GCC_PREFIX_HEADER = "MPinApp/MPinApp-Prefix.pch";
 				INFOPLIST_FILE = "MPinAppTests/MPinAppTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CertiVox M-Pin.app/CertiVox M-Pin";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;

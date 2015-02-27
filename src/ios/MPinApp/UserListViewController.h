@@ -10,12 +10,15 @@
 #import "BaseViewController.h"
 #import "AccessNumberViewController.h"
 
+@interface UserListTableViewCell : UITableViewCell
+
+@property(nonatomic, retain, readwrite) IBOutlet UILabel            *lblUserID;
+@property(nonatomic, retain, readwrite) IBOutlet UIImageView        *imgViewUser;
+@property(nonatomic, retain, readwrite) IBOutlet UIImageView        *imgViewSelected;
+
+@end
+
 @interface UserListViewController : BaseViewController <UITableViewDataSource, UITableViewDelegate, AccessNumberDelegate>
-@property (nonatomic, retain, readwrite) NSMutableArray * users;
-@property(nonatomic, retain, readwrite) IBOutlet UITableView * table;
-
-- (IBAction)addAction:(id)sender;
-- (IBAction)editButton:(id)sender;
-
+@property (nonatomic, retain, readwrite) NSMutableArray *users;
 
 @end

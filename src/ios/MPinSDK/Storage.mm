@@ -35,7 +35,7 @@ void Storage::readStringFromFile(const String & aFileName, OUT String & aData) {
 void Storage::writeStringToFile(const String & aFileName, const IN String & aData) {
     NSString *filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *fileName = [NSString stringWithUTF8String:aFileName.c_str()];
-    NSString *fileAtPath = [filePath stringByAppendingString:fileName];
+    NSString *fileAtPath = [filePath stringByAppendingString:[NSString stringWithFormat:@"/%@",fileName]];
     if (![[NSFileManager defaultManager] fileExistsAtPath:fileAtPath]) {
         [[NSFileManager defaultManager] createFileAtPath:fileAtPath contents:nil attributes:nil];
     }

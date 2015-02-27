@@ -279,17 +279,6 @@ bool MPinSDK::HttpResponse::SetData(const String& rawData, const StringMap& head
     String contentTypeStr = headers.Get(IHttpRequest::CONTENT_TYPE_HEADER);
     m_dataType = DetermineDataType(contentTypeStr);
 
-    if(m_dataType != expectedType)
-    {
-        SetUnexpectedContentTypeError(expectedType, contentTypeStr, rawData);
-        return false;
-    }
-
-    if(m_dataType != JSON)
-    {
-        return true;
-    }
-
     String data = rawData;
     data.Trim();
     if(data.length() > 0 && !m_jsonData.Parse(data.c_str()))
@@ -720,7 +709,7 @@ Status MPinSDK::RequestRegistration(UserPtr user, const String& userData)
     // Make request to RPA to add M-Pin ID
     util::JsonObject data;
     data["userId"] = json::String(user->GetId());
-    data["mobile"] = json::Number(0);
+    data["mobile"] = json::Number(1);
     if(!user->GetDeviceName().empty())
     {
         data["deviceName"] = json::String(user->GetDeviceName());
@@ -1073,9 +1062,13 @@ void MPinSDK::OTP::ExtractFrom(const String& otpData, const util::JsonObject& js
     }
 
     otp = otpData;
-    expireTime = atol(json.GetStringParam("expireTime"));
-    ttlSeconds = atoi(json.GetStringParam("ttlSeconds"));
-    nowTime = atol(json.GetStringParam("nowTime"));
+    
+    ttlSeconds = json.GetIntParam("ttlSeconds");
+    int64_t tmp = json.GetInt64Param("expireTime");
+    expireTime = (long)(tmp / 1000);
+    tmp = json.GetInt64Param("nowTime");
+    nowTime = (long)(tmp / 1000);
+    
     if(expireTime == 0 || ttlSeconds == 0 || nowTime == 0)
     {
         status = Status(Status::RESPONSE_PARSE_ERROR, "OTP data is malformed");

@@ -1,5 +1,6 @@
 package com.certivox.interfaces;
 
+import com.certivox.models.OTP;
 import com.certivox.models.User;
 
 public interface MPinController {
@@ -28,6 +29,18 @@ public interface MPinController {
 
 	public void removePinPadFragment();
 
+	public void addAccessNumberFragment();
+
+	public void removeAccessNumberFragment();
+
+	public void addOTPFragment(OTP otp);
+
+	public void removeOTPFragment();
+
+	public void addSuccessfulLoginFragment();
+
+	public void removeSuccessfulLoginFragment();
+
 	public void setTooblarTitle(int resId);
 
 	public void userChosen();
@@ -53,4 +66,10 @@ public interface MPinController {
 	public void disableContextToolbar();
 
 	public User getCurrentUser();
+
+	public void onPinEntered(String pin);
+
+	public void onAccessNumberEntered(int accessNumber);
+
+	public void setChosenConfiguration(String configTitle);
 }

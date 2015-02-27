@@ -16,7 +16,10 @@
 +(MpinStatus *) initWithConfig:(const NSDictionary*) config;
 +(MpinStatus *) TestBackend:(const NSString * ) url;
 +(MpinStatus *) SetBackend:(const NSString * ) url;
++(MpinStatus *) TestBackend:(const NSString * ) url rpsPrefix:(NSString *) rpsPrefix;
++(MpinStatus *) SetBackend:(const NSString * ) url rpsPrefix:(NSString *) rpsPrefix;
 + (id<IUser>) MakeNewUser: (const NSString *) identity;
++ (id<IUser>) MakeNewUser: (const NSString *) identity deviceName:(const NSString *) devName;
 +(void) DeleteUser:(const id<IUser>) user;
 + (MpinStatus *) StartRegistration:(const  id<IUser>) user;
 + (MpinStatus *) RestartRegistration:(const id<IUser>) user;
@@ -27,7 +30,7 @@
 + (Boolean) Logout:(const  id<IUser>) user;
 + (Boolean) CanLogout:(const  id<IUser>) user;
 +(NSMutableArray*) listUsers;
-+(void) sendPin:(int) pin;
++(void) sendPin:(const NSString *) pin;
 
 /// TEMPORARY FIX
 +(NSString * ) getRPSUrl;

@@ -14,14 +14,13 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.certivox.interfaces.MPinController;
-import com.certivox.listeners.OnPinEnteredListener;
 import com.certivox.models.User;
 import com.certivox.mpin.R;
 
 public class PinPadFragment extends Fragment {
 
 	private MPinController mMpinController;
-	
+
 	private View mView;
 	private TextView mUserEmail;
 	private TextView mDigit0;
@@ -37,25 +36,15 @@ public class PinPadFragment extends Fragment {
 	private ImageButton mButtonLogin;
 	private ImageButton mButtonClear;
 	private EditText mPinEditText;
+	private TextView mWrongPinTextView;
 
-	OnClickListener mOnDigitClickListener;
+	private OnClickListener mOnDigitClickListener;
 	private int mPinLength = 4;
 	private final StringBuilder mInput = new StringBuilder();
 	private volatile boolean mIsPinSet;
-	
-	// TODO remove listener
-	private OnPinEnteredListener mOnPinEnteredListener;
 
 	public void setController(MPinController controller) {
 		mMpinController = controller;
-	}
-
-	public static PinPadFragment newInstance() {
-		return new PinPadFragment();
-	}
-
-	public void setListener(OnPinEnteredListener listener) {
-		mOnPinEnteredListener = listener;
 	}
 
 	public void setPinLength(int length) {
@@ -66,7 +55,7 @@ public class PinPadFragment extends Fragment {
 		return mPinEditText;
 	}
 
-	public void setTitle(String title) {
+	private void setPinInput(String title) {
 		mPinEditText.setText(title);
 		mPinEditText.setSelection(mPinEditText.getText().length());
 	}
@@ -84,7 +73,8 @@ public class PinPadFragment extends Fragment {
 	@Override
 	public void onResume() {
 		mMpinController.disableContextToolbar();
-		if(mMpinController.getCurrentUser().getState().equals(User.State.REGISTERED)) {
+		if (mMpinController.getCurrentUser().getState()
+				.equals(User.State.REGISTERED)) {
 			mMpinController.setTooblarTitle(R.string.enter_pin_title);
 		} else {
 			mMpinController.setTooblarTitle(R.string.setup_pin_title);
@@ -103,6 +93,7 @@ public class PinPadFragment extends Fragment {
 		mPinEditText.setClickable(false);
 		mPinEditText.requestFocus();
 
+		mWrongPinTextView = (TextView) mView.findViewById(R.id.wrong_pin);
 		mDigit0 = (TextView) mView.findViewById(R.id.pinpad_key_0);
 		mDigit1 = (TextView) mView.findViewById(R.id.pinpad_key_1);
 		mDigit2 = (TextView) mView.findViewById(R.id.pinpad_key_2);
@@ -118,6 +109,17 @@ public class PinPadFragment extends Fragment {
 		mButtonClear = (ImageButton) mView.findViewById(R.id.pinpad_key_clear);
 	}
 
+	public void showWrongPin() {
+		mIsPinSet = false;
+		mInput.setLength(0);
+		updateInput();
+		mWrongPinTextView.setVisibility(View.VISIBLE);
+	}
+
+	public void hideWrongPin() {
+		mWrongPinTextView.setVisibility(View.INVISIBLE);
+	}
+
 	private void initPinPad() {
 		mIsPinSet = false;
 		mInput.setLength(0);
@@ -127,12 +129,11 @@ public class PinPadFragment extends Fragment {
 			public void onClick(View v) {
 				synchronized (PinPadFragment.this) {
 					mIsPinSet = true;
-					PinPadFragment.this.notifyAll();
-					if (mOnPinEnteredListener != null) {
-						mOnPinEnteredListener.onPinEntered(parsePin());
+					if (mMpinController != null) {
+						mMpinController.onPinEntered(parsePin());
 					}
+					PinPadFragment.this.notifyAll();
 				}
-				//TODO hide fragment!
 			}
 		});
 
@@ -241,13 +242,14 @@ public class PinPadFragment extends Fragment {
 
 	private void updateInput() {
 		if (mInput.length() < 1) {
-			setTitle("");
+			setPinInput("");
 		} else {
+			hideWrongPin();
 			String pin = "";
 			for (int i = 0; i < mInput.length(); ++i) {
 				pin += '*';
 			}
-			setTitle(pin);
+			setPinInput(pin);
 		}
 
 		mButtonLogin.setEnabled(mInput.length() == mPinLength);

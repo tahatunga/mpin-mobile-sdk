@@ -19,6 +19,7 @@ static MPinSDK mpin;
 /// TEMPORARY FIX
 static NSString * rpsURL;
 
+static NSLock * lock = [[NSLock alloc] init];
 
 typedef MPinSDK::UserPtr UserPtr;
 typedef MPinSDK::Status Status;
@@ -35,53 +36,101 @@ typedef sdk::Context Context;
     /// TEMPORARY FIX
     rpsURL = [config objectForKey:kRPSURL];
     ///
+    NSString * rpsPrefix = [config objectForKey:kRPSPrefix];
+    
     StringMap sm;
     sm[([kRPSURL UTF8String])] = [rpsURL UTF8String];
+    if (rpsPrefix != nil) {
+        sm[([kRPSPrefix UTF8String])] = [rpsPrefix UTF8String];
+    }
+    
+    [lock lock];
     Status s =  mpin.Init(sm, Context::Instance());
+    [lock unlock];
     return [[MpinStatus alloc] initWith:(MPinStatus)s.GetStatusCode() errorMessage:[NSString stringWithUTF8String:s.GetErrorMessage().c_str()]];
 }
 
 +(MpinStatus *) TestBackend:(const NSString * ) url {
+    [lock lock];
     Status s = mpin.TestBackend([url UTF8String]);
+    [lock unlock];
     return [[MpinStatus alloc] initWith:(MPinStatus)s.GetStatusCode() errorMessage:[NSString stringWithUTF8String:s.GetErrorMessage().c_str()]];
 }
 
 +(MpinStatus *) SetBackend:(const NSString * ) url {
+    [lock lock];
     Status s = mpin.SetBackend([url UTF8String]);
+    [lock unlock];
+    return [[MpinStatus alloc] initWith:(MPinStatus)s.GetStatusCode() errorMessage:[NSString stringWithUTF8String:s.GetErrorMessage().c_str()]];
+}
+
++(MpinStatus *) TestBackend:(const NSString * ) url rpsPrefix:(NSString *) rpsPrefix {
+    if (rpsPrefix == nil)   return [MPin TestBackend:url];
+    [lock lock];
+    Status s = mpin.TestBackend([url UTF8String], [rpsPrefix UTF8String]);
+    [lock unlock];
+    return [[MpinStatus alloc] initWith:(MPinStatus)s.GetStatusCode() errorMessage:[NSString stringWithUTF8String:s.GetErrorMessage().c_str()]];
+}
++(MpinStatus *) SetBackend:(const NSString * ) url rpsPrefix:(NSString *) rpsPrefix {
+    if (rpsPrefix == nil)   return [MPin SetBackend:url];
+    [lock lock];
+    Status s = mpin.SetBackend([url UTF8String],[rpsPrefix UTF8String]);
+    [lock unlock];
     return [[MpinStatus alloc] initWith:(MPinStatus)s.GetStatusCode() errorMessage:[NSString stringWithUTF8String:s.GetErrorMessage().c_str()]];
 }
 
 + (id<IUser>) MakeNewUser:(const NSString *) identity {
+    [lock lock];
     UserPtr userPtr = mpin.MakeNewUser([identity UTF8String]);
+    [lock unlock];
+    return [[User alloc] initWith:userPtr];
+}
+
++ (id<IUser>) MakeNewUser: (const NSString *) identity deviceName:(const NSString *) devName {
+    [lock lock];
+    UserPtr userPtr = mpin.MakeNewUser([identity UTF8String], [devName UTF8String]);
+    [lock unlock];
     return [[User alloc] initWith:userPtr];
 }
 
 +(void) DeleteUser:(const id<IUser>) user {
+    [lock lock];
     mpin.DeleteUser([((User *) user) getUserPtr]);
+    [lock unlock];
 }
 
 + (MpinStatus*) StartRegistration:(const  id<IUser>) user {
+    [lock lock];
     Status s = mpin.StartRegistration([((User *) user) getUserPtr]);
+    [lock unlock];
     return [[MpinStatus alloc] initWith:(MPinStatus)s.GetStatusCode() errorMessage:[NSString stringWithUTF8String:s.GetErrorMessage().c_str()]];
 }
 
 + (MpinStatus*) RestartRegistration:(const id<IUser>) user {
+    [lock lock];
     Status s = mpin.RestartRegistration([((User *) user) getUserPtr]);
+    [lock unlock];
     return [[MpinStatus alloc] initWith:(MPinStatus)s.GetStatusCode() errorMessage:[NSString stringWithUTF8String:s.GetErrorMessage().c_str()]];
 }
 
 + (MpinStatus*) FinishRegistration:(const id<IUser>) user {
+    [lock lock];
     Status s = mpin.FinishRegistration([((User *) user) getUserPtr]);
+    [lock unlock];
     return [[MpinStatus alloc] initWith:(MPinStatus)s.GetStatusCode() errorMessage:[NSString stringWithUTF8String:s.GetErrorMessage().c_str()]];
 }
 + (MpinStatus*) Authenticate:(const id<IUser>) user {
+    [lock lock];
     Status s = mpin.Authenticate([((User *) user) getUserPtr]);
+    [lock unlock];
     return [[MpinStatus alloc] initWith:(MPinStatus)s.GetStatusCode() errorMessage:[NSString stringWithUTF8String:s.GetErrorMessage().c_str()]];;
 }
 
 + (MpinStatus*) Authenticate:(id<IUser>) user otp:(OTP **) otp {
     MPinSDK::OTP c_otp;
+    [lock lock];
     Status s = mpin.Authenticate([((User *) user) getUserPtr], c_otp);
+    [lock unlock];
     *otp = [[OTP alloc] initWith:[[MpinStatus alloc] initWith:(MPinStatus)c_otp.status.GetStatusCode() errorMessage:[NSString stringWithUTF8String:c_otp.status.GetErrorMessage().c_str()]]
                              otp:[NSString stringWithUTF8String:c_otp.otp.c_str()]
                       expireTime:c_otp.expireTime
@@ -91,16 +140,24 @@ typedef sdk::Context Context;
 }
 
 + (MpinStatus *) AuthenticateAccessNumber:(id<IUser>) user  accessNumber:(int) an {
-     Status s = mpin.AuthenticateAccessNumber([((User *) user) getUserPtr], an);
+    [lock lock];
+     Status s = mpin.Authenticate([((User *) user) getUserPtr], an);
+    [lock unlock];
     return [[MpinStatus alloc] initWith:(MPinStatus)s.GetStatusCode() errorMessage:[NSString stringWithUTF8String:s.GetErrorMessage().c_str()]];
 }
 
 + (Boolean) Logout:(const  id<IUser>) user {
-    return mpin.Logout([((User *) user) getUserPtr]);
+    [lock lock];
+    Boolean b = mpin.Logout([((User *) user) getUserPtr]);
+    [lock unlock];
+    return b;
 }
 
 + (Boolean) CanLogout:(const  id<IUser>) user {
-    return mpin.CanLogout([((User *) user) getUserPtr]);;
+    [lock lock];
+    Boolean b = mpin.CanLogout([((User *) user) getUserPtr]);
+    [lock unlock];
+    return b;
 }
 
 +(NSMutableArray *) listUsers {
@@ -113,9 +170,9 @@ typedef sdk::Context Context;
     return users;
 }
 
-+(void) sendPin:(int) pin {
++(void) sendPin:(const NSString *) pin {
     Context *ctx = Context::Instance();
-    ctx->setPin(pin);
+    ctx->setPin([pin UTF8String]);
 }
 
 @end

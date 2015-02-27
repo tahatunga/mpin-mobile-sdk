@@ -92,12 +92,18 @@ namespace net {
         NSData * data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         
         if(error != nil) {
+            /// TODO :: IMPORTANT FIX THIS IN LATER COMMITS
+            if(error.code == -1012) {
+                m_statusCode = 401;
+                m_errorMessage += "Unauthorized Access! Please check your e-mail and confirm the activation link!";
+                return true;
+            }
             m_errorMessage += [error.localizedDescription UTF8String];
             return false;
         }
         
         if(response != nil) {
-            m_statusCode = response.statusCode;
+            m_statusCode = (int)response.statusCode;
             for(NSString * key in response.allHeaderFields) {
                 NSString * value = [response.allHeaderFields objectForKey:key];
                 m_responseHeaders[([key UTF8String])] = [value UTF8String];

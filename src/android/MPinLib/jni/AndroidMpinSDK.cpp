@@ -51,12 +51,15 @@ extern "C" JNIEXPORT void JNICALL Mpin_nDestruct(JNIEnv* env, jobject jobj, jlon
 	delete sdk;
 }
 
-extern "C" JNIEXPORT jobject JNICALL Mpin_nMakeNewUser(JNIEnv* env, jobject jobj, jlong jptr, jstring jid) {
+extern "C" JNIEXPORT jobject JNICALL Mpin_nMakeNewUser(JNIEnv* env, jobject jobj, jlong jptr, jstring jid, jstring jdeviceName) {
 	MPinSDK* sdk = (MPinSDK*) jptr;
 	const char* cid = env->GetStringUTFChars(jid, NULL);
 	MPinSDK::String id(cid);
 	env->ReleaseStringUTFChars(jid, cid);
-	MPinSDK::UserPtr user = sdk->MakeNewUser(id);
+	const char* cdeviceName = env->GetStringUTFChars(jdeviceName, NULL);
+	MPinSDK::String deviceName(cdeviceName);
+	env->ReleaseStringUTFChars(jdeviceName, cdeviceName);
+	MPinSDK::UserPtr user = sdk->MakeNewUser(id, deviceName);
 	jclass clsUser = env->FindClass("com/certivox/models/User");
 	jmethodID ctorUser = env->GetMethodID(clsUser, "<init>", "(J)V");
 	return env->NewObject(clsUser, ctorUser, (jlong) new MPinSDK::UserPtr(user));
@@ -68,20 +71,26 @@ static jobject MakeJavaStatus(JNIEnv* env, const MPinSDK::Status& status) {
 	return env->NewObject(clsStatus, ctorStatus, (jint) status.GetStatusCode(), env->NewStringUTF(status.GetErrorMessage().c_str()));
 }
 
-extern "C" JNIEXPORT jobject JNICALL Mpin_nStartRegistration(JNIEnv* env, jobject jobj, jlong jptr, jobject juser) {
+extern "C" JNIEXPORT jobject JNICALL Mpin_nStartRegistration(JNIEnv* env, jobject jobj, jlong jptr, jobject juser, jstring juserData) {
 	MPinSDK* sdk = (MPinSDK*) jptr;
 	jclass clsUser = env->FindClass("com/certivox/models/User");
 	jfieldID fidPtr = env->GetFieldID(clsUser, "mPtr", "J");
 	MPinSDK::UserPtr user = *(MPinSDK::UserPtr*)env->GetLongField(juser, fidPtr);
-	return MakeJavaStatus(env, sdk->StartRegistration(user));
+	const char* cuserData = env->GetStringUTFChars(juserData, NULL);
+	MPinSDK::String userData(cuserData);
+	env->ReleaseStringUTFChars(juserData, cuserData);
+	return MakeJavaStatus(env, sdk->StartRegistration(user, userData));
 }
 
-extern "C" JNIEXPORT jobject JNICALL Mpin_nRestartRegistration(JNIEnv* env, jobject jobj, jlong jptr, jobject juser) {
+extern "C" JNIEXPORT jobject JNICALL Mpin_nRestartRegistration(JNIEnv* env, jobject jobj, jlong jptr, jobject juser, jstring juserData) {
 	MPinSDK* sdk = (MPinSDK*) jptr;
 	jclass clsUser = env->FindClass("com/certivox/models/User");
 	jfieldID fidPtr = env->GetFieldID(clsUser, "mPtr", "J");
 	MPinSDK::UserPtr user = *(MPinSDK::UserPtr*)env->GetLongField(juser, fidPtr);
-	return MakeJavaStatus(env, sdk->RestartRegistration(user));
+	const char* cuserData = env->GetStringUTFChars(juserData, NULL);
+	MPinSDK::String userData(cuserData);
+	env->ReleaseStringUTFChars(juserData, cuserData);
+	return MakeJavaStatus(env, sdk->RestartRegistration(user, userData));
 }
 
 extern "C" JNIEXPORT jobject JNICALL Mpin_nFinishRegistration(JNIEnv* env, jobject jobj, jlong jptr, jobject juser) {
@@ -199,28 +208,34 @@ extern "C" JNIEXPORT jboolean JNICALL Mpin_nLogout(JNIEnv* env, jobject jobj, jl
 	return sdk->Logout(user);
 }
 
-extern "C" JNIEXPORT jobject JNICALL Mpin_nTestBackend(JNIEnv* env, jobject jobj, jlong jptr, jstring jbackend) {
+extern "C" JNIEXPORT jobject JNICALL Mpin_nTestBackend(JNIEnv* env, jobject jobj, jlong jptr, jstring jbackend, jstring jrpsPrefix) {
 	MPinSDK* sdk = (MPinSDK*) jptr;
 	const char* cbackend = env->GetStringUTFChars(jbackend, NULL);
 	MPinSDK::String backend(cbackend);
 	env->ReleaseStringUTFChars(jbackend, cbackend);
-	return MakeJavaStatus(env, sdk->TestBackend(backend));
+	const char* crpsPrefix = env->GetStringUTFChars(jrpsPrefix, NULL);
+	MPinSDK::String rpsPrefix(crpsPrefix);
+	env->ReleaseStringUTFChars(jbackend, crpsPrefix);
+	return MakeJavaStatus(env, sdk->TestBackend(backend, rpsPrefix));
 }
 
-extern "C" JNIEXPORT jobject JNICALL Mpin_nSetBackend(JNIEnv* env, jobject jobj, jlong jptr, jstring jbackend) {
+extern "C" JNIEXPORT jobject JNICALL Mpin_nSetBackend(JNIEnv* env, jobject jobj, jlong jptr, jstring jbackend, jstring jrpsPrefix) {
 	MPinSDK* sdk = (MPinSDK*) jptr;
 	const char* cbackend = env->GetStringUTFChars(jbackend, NULL);
 	MPinSDK::String backend(cbackend);
 	env->ReleaseStringUTFChars(jbackend, cbackend);
-	return MakeJavaStatus(env, sdk->SetBackend(backend));
+	const char* crpsPrefix = env->GetStringUTFChars(jrpsPrefix, NULL);
+	MPinSDK::String rpsPrefix(crpsPrefix);
+	env->ReleaseStringUTFChars(jbackend, crpsPrefix);
+	return MakeJavaStatus(env, sdk->SetBackend(backend, rpsPrefix));
 }
 
 static JNINativeMethod g_methodsMpin[] = {
 	NATIVE_METHOD(Mpin, nConstruct, "(Landroid/content/Context;Ljava/util/Map;)J"),
 	NATIVE_METHOD(Mpin, nDestruct, "(J)V"),
-	NATIVE_METHOD(Mpin, nMakeNewUser, "(JLjava/lang/String;)Lcom/certivox/models/User;"),
-	NATIVE_METHOD(Mpin, nStartRegistration, "(JLcom/certivox/models/User;)Lcom/certivox/models/Status;"),
-	NATIVE_METHOD(Mpin, nRestartRegistration, "(JLcom/certivox/models/User;)Lcom/certivox/models/Status;"),
+	NATIVE_METHOD(Mpin, nMakeNewUser, "(JLjava/lang/String;Ljava/lang/String;)Lcom/certivox/models/User;"),
+	NATIVE_METHOD(Mpin, nStartRegistration, "(JLcom/certivox/models/User;Ljava/lang/String;)Lcom/certivox/models/Status;"),
+	NATIVE_METHOD(Mpin, nRestartRegistration, "(JLcom/certivox/models/User;Ljava/lang/String;)Lcom/certivox/models/Status;"),
 	NATIVE_METHOD(Mpin, nFinishRegistration, "(JLcom/certivox/models/User;)Lcom/certivox/models/Status;"),
 	NATIVE_METHOD(Mpin, nAuthenticate, "(JLcom/certivox/models/User;)Lcom/certivox/models/Status;"),
 	NATIVE_METHOD(Mpin, nAuthenticateOtp, "(JLcom/certivox/models/User;Lcom/certivox/models/OTP;)Lcom/certivox/models/Status;"),
@@ -231,8 +246,8 @@ static JNINativeMethod g_methodsMpin[] = {
 	NATIVE_METHOD(Mpin, nListUsers, "(JLjava/util/List;)V"),
 	NATIVE_METHOD(Mpin, nCanLogout, "(JLcom/certivox/models/User;)Z"),
 	NATIVE_METHOD(Mpin, nLogout, "(JLcom/certivox/models/User;)Z"),
-	NATIVE_METHOD(Mpin, nTestBackend, "(JLjava/lang/String;)Lcom/certivox/models/Status;"),
-	NATIVE_METHOD(Mpin, nSetBackend, "(JLjava/lang/String;)Lcom/certivox/models/Status;")
+	NATIVE_METHOD(Mpin, nTestBackend, "(JLjava/lang/String;Ljava/lang/String;)Lcom/certivox/models/Status;"),
+	NATIVE_METHOD(Mpin, nSetBackend, "(JLjava/lang/String;Ljava/lang/String;)Lcom/certivox/models/Status;")
 };
 
 void register_Mpin(JNIEnv* env) {

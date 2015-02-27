@@ -164,6 +164,7 @@
     <None Include="..\..\src\core\json\elements.inl" />
     <None Include="..\..\src\core\json\reader.inl" />
     <None Include="..\..\src\core\json\writer.inl" />
+    <None Include="unit_tests.vcxproj.filters" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

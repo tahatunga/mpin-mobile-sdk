@@ -15,6 +15,7 @@ import com.example.mpinsdk.R;
 public class IdentityCreatedFragment extends Fragment {
 
 	private MPinController mMpinController;
+	private TextView mInfoTextView;
 	private View mView;
 	private TextView mUserEmailTextView;
 	private Button mSignInButton;
@@ -42,6 +43,10 @@ public class IdentityCreatedFragment extends Fragment {
 	}
 
 	private void initViews() {
+		mInfoTextView = (TextView) mView.findViewById(R.id.info_text);
+		mInfoTextView.setText(String.format(
+				getResources().getString(R.string.identity_created),
+				mMpinController.getCurrentUser().getId()));
 		mUserEmailTextView = (TextView) mView.findViewById(R.id.user_email);
 		mUserEmailTextView.setText(mMpinController.getCurrentUser().getId());
 

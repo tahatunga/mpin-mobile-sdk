@@ -22,19 +22,35 @@
         android:layout_below="@+id/user_avatar"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:textSize="22sp" />
+        android:textColor="@color/base_text_color"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/pinpad_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/user_email"
+        android:layout_marginEnd="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
-        android:inputType="numberPassword"
         android:gravity="center"
+        android:inputType="numberPassword"
         android:padding="12dp"
-        android:textColor="#363c74"
+        android:textColor="#7D7D7D"
         android:textSize="26sp" />
+
+    <TextView
+        android:id="@+id/wrong_pin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pinpad_input"
+        android:gravity="center_horizontal"
+        android:text="@string/wrong_pin"
+        android:textColor="@color/orange"
+        android:textSize="14sp"
+        android:visibility="invisible" />
 
     <TableLayout
         android:id="@+id/pinpad_keys"

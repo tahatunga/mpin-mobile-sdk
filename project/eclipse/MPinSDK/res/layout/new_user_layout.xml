@@ -24,7 +24,7 @@
         android:layout_marginTop="20dp"
         android:text="@string/enter_mail_title"
         android:textColor="@color/green"
-        android:textSize="12sp" />
+        android:textSize="16sp" />
 
     <EditText
         android:id="@+id/email_input"
@@ -33,31 +33,19 @@
         android:layout_below="@+id/enter_mail_title"
         android:inputType="textEmailAddress" />
 
-    <TextView
-        android:id="@+id/device_name_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/email_input"
-        android:layout_marginTop="20dp"
-        android:text="@string/device_name_title"
-        android:textColor="@color/green"
-        android:textSize="12sp" />
-
-    <EditText
-        android:id="@+id/device_name_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/device_name_title"
-        android:inputType="text" />
-
     <Button
         android:id="@+id/create_identity_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button_selector"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_selector_green"
+        android:paddingEnd="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingStart="20dp"
         android:text="@string/create_identity"
-        android:textColor="@color/button_selector_textcolor" />
+        android:textColor="@color/button_selector_green_textcolor" />
 
 </RelativeLayout>

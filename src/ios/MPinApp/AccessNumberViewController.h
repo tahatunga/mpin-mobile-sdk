@@ -14,5 +14,9 @@
 @end
 
 @interface AccessNumberViewController : DigitPadViewController
+
 @property (weak) id <AccessNumberDelegate> delegate;
+@property(nonatomic,weak) IBOutlet UILabel *lblEmail;
+@property(nonatomic,strong) NSString *strEmail;
+
 @end

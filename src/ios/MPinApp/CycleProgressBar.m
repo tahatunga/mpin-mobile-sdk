@@ -11,8 +11,13 @@
 #define kBeginAngle		1.57
 #define kEndAngle		7.85
 #define kLablelWidth	30
+
 #define kLabelHeight	30
-#define kArcWidth		10
+#define kArcWidth		20
+
+#define kRed            0.5
+#define kGreen          0.5
+#define kBlue           0.5
 
 @implementation CycleProgressBar
 
@@ -20,21 +25,23 @@
 
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
+        self.backgroundColor = [UIColor whiteColor];
         context = 0;
 		ind = 1.0;
 		initialRadian = kEndAngle;
-        self.counterLabel = [[UILabel alloc] initWithFrame:CGRectMake(((frame.size.width - kLablelWidth)/2), ((frame.size.height - kLabelHeight)/2), kLablelWidth, kLabelHeight)];
-        [self.counterLabel setTextAlignment:NSTextAlignmentCenter];
-		[self addSubview:self.counterLabel];
-		self.backgroundColor = [UIColor whiteColor];
-		loadingIndicator  = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-		[self addSubview:loadingIndicator];
-		[self bringSubviewToFront:loadingIndicator];
-		loadingIndicator.hidesWhenStopped = YES;
-		CGRect frame = loadingIndicator.frame;
-		frame.origin.x += 6.0;
-		frame.origin.y += 6.0;
-		loadingIndicator.frame = frame;
+        
+        _counterLabel = [[UILabel alloc] initWithFrame:CGRectMake(((frame.size.width - kLablelWidth)/2), ((frame.size.height - kLabelHeight)*5/12), kLablelWidth, kLabelHeight)];
+        [_counterLabel setTextAlignment:NSTextAlignmentCenter];
+        [_counterLabel setFont:[UIFont systemFontOfSize:22]];
+        [self addSubview:_counterLabel];
+
+        _secLabel = [[UILabel alloc] initWithFrame:CGRectMake(((frame.size.width - kLablelWidth)/2), ((frame.size.height - kLabelHeight)*7/12), kLablelWidth, kLabelHeight)];
+        [_secLabel setTextAlignment:NSTextAlignmentCenter];
+        _secLabel.text = @"SEC";
+        [_secLabel setTextColor:[UIColor lightGrayColor]];
+        [_secLabel setFont:[UIFont systemFontOfSize:10]];
+        [self addSubview:_secLabel];
+        
         isLoading = NO;
     }
     return self;
@@ -44,8 +51,15 @@
 	if(context == 0) {
 		context = UIGraphicsGetCurrentContext();
 	}
+    
+    CGContextSetRGBStrokeColor(context, kRed, kGreen, kBlue, 1.0);
+    CGContextSetLineWidth(context, kArcWidth);
+    CGContextAddArc(context, (rect.size.width/2) ,(rect.size.height/2), ((rect.size.height/2) - (kArcWidth/2) ), 0.0,  kEndAngle, FALSE);
+    CGContextStrokePath(context);
+
+    
 	
-	CGContextSetRGBStrokeColor(context, 0.52, 0.53, 0.67, 1.0);
+	CGContextSetRGBStrokeColor(context, 1.0, 1.0, 1.0, 1.0);
 	CGContextSetLineWidth(context, kArcWidth);
 	CGContextAddArc(context, (rect.size.width/2) ,(rect.size.height/2), ((rect.size.height/2) - (kArcWidth/2) ), - kBeginAngle, - initialRadian, FALSE);
  	CGContextStrokePath(context);

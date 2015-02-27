@@ -10,10 +10,10 @@
 
 typedef NS_ENUM(NSInteger, UserState)
 {
-    INVALID,
+    INVALID = 0,
     STARTED_REGISTRATION,
-    REGISTERED,
-    REVOKED
+    ACTIVATED,
+    REGISTERED
 };
 
 @protocol IUser <NSObject>

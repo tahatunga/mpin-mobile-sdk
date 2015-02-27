@@ -17,6 +17,7 @@ public class ConfirmEmailFragment extends Fragment {
 	private MPinController mMpinController;
 	private View mView;
 	private TextView mUserEmailTextView;
+	private TextView mInfoTextView;
 	private Button mEmailConfirmedButton;
 	private Button mResendMailButton;
 	private Button mBackButton;
@@ -38,6 +39,7 @@ public class ConfirmEmailFragment extends Fragment {
 
 	@Override
 	public void onResume() {
+		mMpinController.disableContextToolbar();
 		mMpinController.setTooblarTitle(R.string.confirm_email_title);
 		super.onResume();
 	}
@@ -46,6 +48,10 @@ public class ConfirmEmailFragment extends Fragment {
 		mUserEmailTextView = (TextView) mView.findViewById(R.id.user_email);
 		mUserEmailTextView.setText(mMpinController.getCurrentUser().getId());
 
+		mInfoTextView = (TextView) mView.findViewById(R.id.info_text);
+		mInfoTextView.setText(String.format(
+				getResources().getString(R.string.confirm_new_identitiy),
+				mMpinController.getCurrentUser().getId()));
 		mEmailConfirmedButton = (Button) mView
 				.findViewById(R.id.email_confirmed_button);
 		mResendMailButton = (Button) mView

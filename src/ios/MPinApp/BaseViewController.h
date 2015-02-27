@@ -9,32 +9,39 @@
 #import <UIKit/UIKit.h>
 #import "MpinStatus.h"
 #import "MPin.h"
+#import "MFSideMenu.h"
+#import "SettingsManager.h"
+#import "ATMHud.h"
+
+#import "ThemeManager.h"
+
+
 
 #define SUCCESSFUL_AUTHENTICATION 200
-#define USER_ACTIVATION_REQUIRED    403
+#define USER_ACTIVATION_REQUIRED 403
 
 #define GOTO_IDENTITY_LIST 0
-#define ICONFIRM    1
-#define RESEND      2
-
-static  NSString * kSetupPin =  @"Setup new PIN";
-static  NSString * kEnterPin = @"Enter your PIN";
+#define ICONFIRM 1
+#define RESEND 2
 
 
 @interface BaseViewController : UIViewController <UIAlertViewDelegate> {
+    ATMHud* hud;
     id<IUser> currentUser;
-    NSString * pinpadHeaderTitle;
+    NSString* pinpadHeaderTitle;
+    NSString *strBuildNumber;
+    NSString *strAppVersion;
+    NSString *strSDKVersion;
+    ThemeManager *themeManager;
 }
 
-@property(nonatomic,retain, readwrite) IBOutlet UIActivityIndicatorView * activity;
-@property(nonatomic, retain, readwrite) IBOutlet UIButton * addButton;
+- (void)showPinPad;
+- (void)startLoading;
+- (void)stopLoading;
 
--(void) showPinPad;
--(void) startLoading;
--(void) stopLoading;
-
--(void) finishRegistration:(id<IUser>) iuser;
--(void) onFinishRegistration:(MpinStatus*) mpinStatus;
--(void) sendReactivationEmail:(id<IUser>) iuser;
+- (void) showConfirmationScreen:(id<IUser>) iuser;
+- (void)finishRegistration:(id<IUser>)iuser;
+- (void)onFinishRegistration:(MpinStatus*)mpinStatus;
+- (IBAction)showLeftMenuPressed:(id)sender;
 
 @end

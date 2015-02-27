@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.certivox.interfaces.MPinController;
@@ -21,11 +20,12 @@ public abstract class BaseMPinActivity extends ActionBarActivity implements
 		MPinController {
 
 	private Activity mActivity;
-	private RelativeLayout mActivityLayoutContainer;
 
 	private ActionBarDrawerToggle mDrawerToggle;
-	private DrawerLayout mDrawerLayout;
+	protected DrawerLayout mDrawerLayout;
 	private Toolbar mToolbar;
+
+	private TextView mDrawerSubtitle;
 
 	private TextView mChangeIdentityButton;
 	private TextView mChangeServiceButton;
@@ -33,26 +33,31 @@ public abstract class BaseMPinActivity extends ActionBarActivity implements
 
 	private boolean isSelectUserContext;
 
-	/** Returns the resource id for the main layout */
-	public abstract int getActivityLayout();
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.base_drawer_layout);
 		mActivity = this;
 		isSelectUserContext = false;
-		mActivityLayoutContainer = (RelativeLayout) findViewById(R.id.activity_content);
-
-		getLayoutInflater().inflate(getActivityLayout(),
-				mActivityLayoutContainer);
 
 		initViews();
 		initActionBar();
 		initNavigationDrawer();
 	}
 
+	@Override
+	protected void onStop() {
+		mDrawerLayout.closeDrawers();
+		super.onStop();
+	}
+
+	@Override
+	public void setChosenConfiguration(String configTitle) {
+		mDrawerSubtitle.setText(configTitle);
+	}
+
 	private void initViews() {
+		mDrawerSubtitle = (TextView) findViewById(R.id.drawer_subtitle);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 		mToolbar = (Toolbar) findViewById(R.id.toolbar);
 		mChangeIdentityButton = (TextView) findViewById(R.id.change_identitiy);
@@ -90,10 +95,17 @@ public abstract class BaseMPinActivity extends ActionBarActivity implements
 
 	}
 
+	protected void onChangeIdentityClicked() {
+	}
+
 	private void initDrawerMenu() {
-		mChangeIdentityButton.setClickable(true);
-		mChangeServiceButton.setClickable(true);
-		mAboutButton.setClickable(true);
+		mChangeIdentityButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				onChangeIdentityClicked();
+			}
+		});
 
 		mChangeServiceButton.setOnClickListener(new OnClickListener() {
 
@@ -103,7 +115,7 @@ public abstract class BaseMPinActivity extends ActionBarActivity implements
 			}
 		});
 	}
-	
+
 	@Override
 	public void enableContextToolbar() {
 		if (!isSelectUserContext) {
@@ -119,7 +131,7 @@ public abstract class BaseMPinActivity extends ActionBarActivity implements
 			invalidateOptionsMenu();
 		}
 	}
-	
+
 	@Override
 	public void disableContextToolbar() {
 		enableDrawer();
@@ -163,6 +175,9 @@ public abstract class BaseMPinActivity extends ActionBarActivity implements
 		case R.id.reset_pin:
 			resetPin();
 			return true;
+		case android.R.id.home:
+			onBackPressed();
+			return true;
 		default:
 			return false;
 		}
@@ -180,10 +195,10 @@ public abstract class BaseMPinActivity extends ActionBarActivity implements
 
 	@Override
 	public void onBackPressed() {
+		mDrawerLayout.closeDrawers();
 		if (getFragmentManager().getBackStackEntryCount() > 0) {
 			getFragmentManager().popBackStack();
-		} else {
-			super.onBackPressed();
 		}
+		super.onBackPressed();
 	}
 }

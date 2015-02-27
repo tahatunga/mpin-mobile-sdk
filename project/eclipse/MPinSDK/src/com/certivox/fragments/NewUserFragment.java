@@ -1,8 +1,11 @@
 package com.certivox.fragments;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.certivox.activities.MPinActivity;
 import com.certivox.interfaces.MPinController;
 import com.example.mpinsdk.R;
 
@@ -18,7 +22,6 @@ public class NewUserFragment extends Fragment {
 	private MPinController mMpinController;
 	private View mView;
 	private EditText mEmailEditText;
-	private EditText mDeviceNameEditText;
 	private Button mCreateIdentitiyButton;
 
 	public void setController(MPinController controller) {
@@ -36,8 +39,6 @@ public class NewUserFragment extends Fragment {
 
 	private void initViews() {
 		mEmailEditText = (EditText) mView.findViewById(R.id.email_input);
-		mDeviceNameEditText = (EditText) mView
-				.findViewById(R.id.device_name_input);
 		mCreateIdentitiyButton = (Button) mView
 				.findViewById(R.id.create_identity_button);
 
@@ -45,16 +46,41 @@ public class NewUserFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				closeKeyBoard();
-				mMpinController.createNewUser(mEmailEditText.getText()
-						.toString());
+				String email = mEmailEditText.getText().toString();
+				if (validateEmail(email)) {
+					mMpinController.createNewUser(email);
+				} else {
+					showInvalidEmailDialog();
+				}
+
 			}
 		});
 	}
 
 	@Override
 	public void onResume() {
+		mMpinController.disableContextToolbar();
 		mMpinController.setTooblarTitle(R.string.add_identity_title);
 		super.onResume();
+	}
+
+	private boolean validateEmail(String email) {
+		if (TextUtils.isEmpty(email)) {
+			return false;
+		} else {
+			return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+		}
+	}
+
+	private void showInvalidEmailDialog() {
+		new AlertDialog.Builder(getActivity()).setTitle("Invalid email")
+				.setMessage("Please, enter valid email address!")
+				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				}).show();
 	}
 
 	private void closeKeyBoard() {

@@ -13,10 +13,11 @@ static NSString * const kOnFinishShowingPinPadNotification = @"onFinishShowingPi
 
 @interface PinPadViewController : DigitPadViewController
 
-@property(nonatomic, retain, readwrite) IBOutlet UILabel *identity;
-@property(nonatomic, retain, readwrite) IBOutlet UILabel * titles;
+@property (nonatomic, weak) IBOutlet UIView * pinView;
+@property(nonatomic, weak) IBOutlet UILabel *lblEmail;
+@property(nonatomic, weak) UILabel *strEmail;
 
+@property(nonatomic) BOOL boolShouldShowBackButton;
 @property(nonatomic, retain, readwrite) NSString * userId;
-@property(nonatomic, retain, readwrite) NSString * headerTitle;
 
 @end

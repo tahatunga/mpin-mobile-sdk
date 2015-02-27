@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "FE4900161A1A3CEB000030A4"
-               BuildableName = "MPinApp.app"
+               BuildableName = "CertiVox M-Pin.app"
                BlueprintName = "MPinApp"
                ReferencedContainer = "container:MPinApp.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FE4900161A1A3CEB000030A4"
-            BuildableName = "MPinApp.app"
+            BuildableName = "CertiVox M-Pin.app"
             BlueprintName = "MPinApp"
             ReferencedContainer = "container:MPinApp.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FE4900161A1A3CEB000030A4"
-            BuildableName = "MPinApp.app"
+            BuildableName = "CertiVox M-Pin.app"
             BlueprintName = "MPinApp"
             ReferencedContainer = "container:MPinApp.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "FE4900161A1A3CEB000030A4"
-            BuildableName = "MPinApp.app"
+            BuildableName = "CertiVox M-Pin.app"
             BlueprintName = "MPinApp"
             ReferencedContainer = "container:MPinApp.xcodeproj">
          </BuildableReference>

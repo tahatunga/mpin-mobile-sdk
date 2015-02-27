@@ -2,6 +2,7 @@ package com.certivox.fragments;
 
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,6 @@ public class UsersListFragment extends ListFragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.users_list_layout, container,
 				false);
-
 		view.findViewById(R.id.add_user_button).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
@@ -73,17 +73,25 @@ public class UsersListFragment extends ListFragment {
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		if (m_selectedListener != null) {
-			UsersAdapter adapter = getListAdapter();
-			if (adapter != null) {
-				User selectedUser = adapter.getItem(position);
-				deselectAllUsers();
-				selectedUser.setUserSelected(true);
-				adapter.notifyDataSetChanged();
-
-				m_selectedListener.onUserSelected(adapter.getItem(position),
-						position);
+		UsersAdapter adapter = getListAdapter();
+		if (adapter != null) {
+			User user = adapter.getItem(position);
+			setSelectedUser(user);
+			if (m_selectedListener != null) {
+				m_selectedListener.onUserSelected(user);
 			}
+		}
+	}
+
+	public void setSelectedUser(User user) {
+		UsersAdapter adapter = getListAdapter();
+		if (adapter != null) {
+			deselectAllUsers();
+			if (user != null) {
+				user.setUserSelected(true);
+				mMpinController.enableContextToolbar();
+			}
+			adapter.notifyDataSetChanged();
 		}
 	}
 

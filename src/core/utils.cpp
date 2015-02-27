@@ -132,6 +132,18 @@ int JsonObject::GetIntParam(const char *name) const
         return 0;
     }
 }
+    
+int64_t JsonObject::GetInt64Param(const char *name) const
+{
+    try
+    {
+        return (int64_t)((const json::Number&) (*this)[name]).Value();
+    }
+    catch(const json::Exception&)
+    {
+        return 0;
+    }
+}
 
 bool JsonObject::GetBoolParam(const char *name) const
 {

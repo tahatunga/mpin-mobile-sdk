@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "BackButton.h"
 
 @interface AddIdentityViewController : BaseViewController <UITextFieldDelegate>
-@property(nonatomic, retain, readwrite) IBOutlet UITextField *label;
-- (IBAction)addAction:(id)sender;
+
+@property(nonatomic, retain, readwrite) IBOutlet BackButton     *btnBack;
+@property(nonatomic, retain, readwrite) IBOutlet UITextField    *txtIdentity;
+@property(nonatomic, retain, readwrite) IBOutlet UITextField    *txtDevName;
+@property(nonatomic, retain, readwrite) IBOutlet UILabel        *lblIdentity;
+@property(nonatomic, retain, readwrite) IBOutlet UILabel        *lblDevName;
+
 @end

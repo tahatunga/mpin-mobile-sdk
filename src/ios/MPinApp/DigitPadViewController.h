@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
 @interface DigitPadViewController : UIViewController {
     int numberIndex;
@@ -23,8 +24,6 @@
 
 - (void) enableNumButtons;
 - (void) disableNumButtons;
-- (void) renderUIButtons;
-
 
 - (IBAction)logInAction:(id)sender;
 - (IBAction)clearAction:(id)sender;

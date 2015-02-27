@@ -8,13 +8,20 @@
 
 #import "UserListViewController.h"
 #import "OTPViewController.h"
-#import "GraphicUtill.h"
 #import "IUser.h"
 #import "Constants.h"
 #import "ATMHud.h"
+#import "SettingsManager.h"
+#import "UIViewController+Helper.h"
+#import "AccountSummaryViewController.h"
+#import "SettingsManager.h"
 
-#define ON_LOGOUT 201
+
+#define ON_LOGOUT 403
 #define LOGOUT_BUTTON_INDEX 1
+#define NOT_SELECTED    -1
+#define DELETE_TAG  204
+#define DELETE_BUTTON_INDEX  1
 
 
 static NSString * const kMpinStatus = @"MpinStatus";
@@ -22,27 +29,55 @@ static NSString * const kOTP = @"OTP";
 static NSString * const kAN = @"AN";
 
 
+@implementation UserListTableViewCell
+@end
+
 @interface UserListViewController ()
 {
+    NSIndexPath * selectedIndexPath;
     ATMHud *hud;
     int accN;
+    BOOL boolIsInitialised;
 }
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *constraintLeadingSpace;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *constraintTrailingSpace;
 -(void) authenticate:(id<IUser>) iuser;
--(void) onAuthenticateCompleted:(MpinStatus *) mpinStatus;
+-(void) authenticateOTP:(id<IUser>) iuser;
 -(void) authenticateAN:(id<IUser>) iuser;
--(void) onAuthenticateCompletedAN:(MpinStatus *) mpinStatus;
+
+- (IBAction)btnAddIDTap:(id)sender;
+- (IBAction)btnEditTap:(id)sender;
+- (IBAction)btnDeleteTap:(id)sender;
+- (IBAction)btnAuthTap:(id)sender;
+
+- (void) deleteSelectedUser;
+
+@property(nonatomic, retain, readwrite) IBOutlet UITableView        *table;
+@property(nonatomic, retain, readwrite) IBOutlet UIButton           *btnAdd;
+@property(nonatomic, retain, readwrite) IBOutlet UIButton           *btnDelete;
+@property(nonatomic, retain, readwrite) IBOutlet UIButton           *btnEdit;
+@property(nonatomic, retain, readwrite) IBOutlet UIButton           *btnAuthenticate;
+
 
 @end
 
 @implementation UserListViewController
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        selectedIndexPath = [NSIndexPath indexPathForRow:NOT_SELECTED inSection:NOT_SELECTED];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [GraphicUtill roundBorder:self.table withRadius:4.0 colour:[UIColor colorWithWhite: 0.8 alpha: 1.0]  width:1.0];
-    self.title = @"Users";
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.59 green:0.6 blue:0.72 alpha:1];
-    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    self.title = @"Identity List";
+    
+    boolIsInitialised = NO;
     
     NSInteger selectedIndex = [[NSUserDefaults standardUserDefaults]
                                integerForKey:kCurrentSelectionIndex];
@@ -50,13 +85,30 @@ static NSString * const kAN = @"AN";
     NSArray *settings = [[NSUserDefaults standardUserDefaults] objectForKey:kSettings];
     if (settings == nil)
     {
-        NSDictionary * data = [NSDictionary  dictionaryWithObjectsAndKeys:  @"http://ec2-54-77-232-113.eu-west-1.compute.amazonaws.com", kRPSURL,
+       NSDictionary * data = [NSDictionary  dictionaryWithObjectsAndKeys:  @"http://tcb.certivox.org", kRPSURL,
                                [NSNumber numberWithBool:NO], kIS_OTP,
                                [NSNumber numberWithBool:NO], kIS_ACCESS_NUMBER,
+                                @"Mobile banking login",kCONFIG_NAME,
                                nil];
+        NSDictionary * dataOTP = [NSDictionary  dictionaryWithObjectsAndKeys:  @"http://otp.m-pin.id", kRPSURL,
+                                  [NSNumber numberWithBool:YES], kIS_OTP,
+                                  [NSNumber numberWithBool:NO], kIS_ACCESS_NUMBER,
+                                  @"VPN login",kCONFIG_NAME,
+                                  nil];
+        NSDictionary * dataAN = [NSDictionary  dictionaryWithObjectsAndKeys:  @"http://tcb.certivox.org", kRPSURL,
+                                 [NSNumber numberWithBool:NO], kIS_OTP,
+                                 [NSNumber numberWithBool:YES], kIS_ACCESS_NUMBER,
+                                 @"Online banking login",kCONFIG_NAME,
+                                 nil];
+        
+        
         settings =[NSMutableArray array];
         [(NSMutableArray *)settings addObject:data];
+        [(NSMutableArray *)settings addObject:dataOTP];
+        [(NSMutableArray *)settings addObject:dataAN];
+        
         selectedIndex = [settings indexOfObject:data];
+        
         [[NSUserDefaults standardUserDefaults] setInteger:selectedIndex forKey:kCurrentSelectionIndex];
         [[NSUserDefaults standardUserDefaults] setObject:settings forKey:kSettings];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -64,202 +116,263 @@ static NSString * const kAN = @"AN";
     
     
     
+    hud = [[ATMHud alloc] initWithDelegate:self];
+    [hud setCaption:@"Changing configuration. Please wait."];
+    [hud setActivity:YES];
+    [hud showInView:self.view];
+    
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)); // 1
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        
+    });
+    
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [MPin initWithConfig:[settings objectAtIndex:selectedIndex]];
+        NSLog(@"########################################");
+        MpinStatus* status = [MPin initWithConfig:[settings objectAtIndex:selectedIndex]];
         dispatch_async(dispatch_get_main_queue(), ^(void) {
+            if (status.status != OK) {
+                [self showError:[status getStatusCodeAsString] desc:status.errorMessage];
+            }
+            [hud hide];
             self.users = [MPin listUsers];
             [self.table reloadData];
         });
     });
+    _constraintLeadingSpace.constant = self.navigationController.navigationBar.frame.size.width;
+    _constraintTrailingSpace.constant = -self.navigationController.navigationBar.frame.size.width;
+    
+    _btnDelete.backgroundColor = [[SettingsManager sharedManager] color1];
+    [_btnDelete setTitleColor:[[SettingsManager sharedManager] color8] forState:UIControlStateNormal];
+    [_btnDelete  setTitle:@"DELETE" forState:UIControlStateNormal];
+    
+    _btnEdit.backgroundColor = [[SettingsManager sharedManager] color1];
+    [_btnEdit setTitleColor:[[SettingsManager sharedManager] color6] forState:UIControlStateNormal];
+    [_btnEdit  setTitle:@"EDIT" forState:UIControlStateNormal];
+    
+    _btnAuthenticate.backgroundColor = [[SettingsManager sharedManager] color6];
+    [_btnAuthenticate setTitleColor:[[SettingsManager sharedManager] color1] forState:UIControlStateNormal];
+    
+    
+    _btnAdd.backgroundColor = [[SettingsManager sharedManager] color6];
+    [_btnAdd  setTitle:@"ADD NEW IDENTITY +" forState:UIControlStateNormal];
+    _btnAdd.titleLabel.font = [UIFont fontWithName:@"OpenSans" size:16.0];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.menuContainerViewController setPanMode:MFSideMenuPanModeDefault];
+    [themeManager beautifyViewController:self];
     [self stopLoading];
     self.users = [MPin listUsers];
+    if ([self.users count] == 0)
+    {
+        _constraintLeadingSpace.constant = self.navigationController.navigationBar.frame.size.width;
+        _constraintTrailingSpace.constant = -self.navigationController.navigationBar.frame.size.width;
+        [self.view layoutIfNeeded];
+
+    }
     [self.table reloadData];
+    
 }
 
 #pragma mark - Table view delegate -
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 45.f;
-}
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section    {   return self.users.count;    }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.users.count;
-}
 
-// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
-// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *userListTableIdentifier = @"UserListTableCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:userListTableIdentifier];
-    if (cell == nil)    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:userListTableIdentifier];
-    id<IUser> iuser = [self.users objectAtIndex:indexPath.row];
-    cell.textLabel.text = [iuser getIdentity];
-    UserState us = [iuser getState];
-    if (us == STARTED_REGISTRATION)                 cell.imageView.image = [UIImage imageNamed:@"inactive.png"];
-    else if(us == REGISTERED || us == REVOKED)      cell.imageView.image = [UIImage imageNamed:@"active.png"];
-    else                                            cell.imageView.image = [UIImage imageNamed:@"problem.png"];
+    static NSString *userListTableIdentifier = @"UserListTableViewCell";
+    UserListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:userListTableIdentifier];
+    if (cell == nil)    cell = [[UserListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:userListTableIdentifier];
+    cell.lblUserID.font = [UIFont fontWithName:@"OpenSans-Regular" size:14.f];
+    cell.lblUserID.textColor = [[SettingsManager sharedManager] color6];
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UserListTableViewCell *c = (UserListTableViewCell *)cell;
     id<IUser> iuser = [self.users objectAtIndex:indexPath.row];
-    [MPin DeleteUser:iuser];
-    [self.users removeObjectAtIndex:indexPath.row];
-    [self.table reloadData];
-}
+    c.lblUserID.text = [iuser getIdentity];
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return UITableViewCellEditingStyleDelete;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    id<IUser> iuser = [self.users objectAtIndex:indexPath.row];
-    UserState state = [iuser getState];
-    if(state == STARTED_REGISTRATION)
+    
+    if ((selectedIndexPath != nil) && (indexPath.row == selectedIndexPath.row))
     {
-        [self startLoading];
-        pinpadHeaderTitle = kSetupPin;
-        [self performSelectorInBackground:@selector(finishRegistration:) withObject:iuser];
-    }
-    else if (state == REGISTERED)
-    {
-        [self startLoading];
-        currentUser = iuser;
-        pinpadHeaderTitle = kEnterPin;
-        NSInteger currentSelectedIndex = [[NSUserDefaults standardUserDefaults] integerForKey:kCurrentSelectionIndex];
-        NSArray * settings = [[NSUserDefaults standardUserDefaults] objectForKey:kSettings];
-        NSDictionary * config = [settings objectAtIndex:currentSelectedIndex];
-        
-        Boolean isOTP = [(NSNumber *)[config objectForKey:kIS_OTP] boolValue];
-        Boolean isAN  = [(NSNumber *)[config objectForKey:kIS_ACCESS_NUMBER] boolValue];
-        
-        if(isAN)
-        {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-            AccessNumberViewController * accessViewController = [storyboard instantiateViewControllerWithIdentifier:@"accessnumber"];
-            accessViewController.delegate = self;
-            [self.navigationController pushViewController:accessViewController animated:YES];
-        }
-        else if(isOTP)
-        {
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                
-                OTP *otp = nil;
-                MpinStatus* status = [MPin Authenticate:iuser otp:&otp];
-                
-                NSDictionary *dictParams = @{kOTP:otp, kMpinStatus:status};
-                
-                dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    
-                    MpinStatus * mpinStatus = [dictParams objectForKey:kMpinStatus];
-                    if(mpinStatus.status != OK )
-                    {
-                        [self stopLoading];
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[mpinStatus getStatusCodeAsString] message:mpinStatus.errorMessage delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil, nil];
-                        [alert show];
-                    }
-                    else
-                    {
-                        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-                        OTPViewController * otpViewController = [storyboard instantiateViewControllerWithIdentifier:@"OTP"];
-                        otpViewController.otpData = [dictParams objectForKey:kOTP];
-                        [self stopLoading];
-                        [self.navigationController pushViewController:otpViewController animated:YES];
-
-                    }
-                    
-                });
-            });
-        }
-        else
-        {
-            [self performSelectorInBackground:@selector(authenticate:) withObject:iuser];
-        }
-    }
-    else if(state == INVALID)
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid User" message:@"Reactivate an Account!" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil, nil];
-        [alert show];
+        c.imgViewSelected.image = [UIImage imageNamed:@"checked"];
     }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"INFO" message:@"Unsupported State and Action!" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil, nil];
-        [alert show];
+        c.imgViewSelected.image = [UIImage imageNamed:@"pin-dot-empty"];
     }
-    [self.table deselectRowAtIndexPath:indexPath animated:YES];
+
+    switch ([iuser getState]) {
+        case INVALID:
+            c.imgViewUser.image = [UIImage imageNamed:@"avatar-list-unregistered"];
+            break;
+        case STARTED_REGISTRATION:
+            c.imgViewUser.image = [UIImage imageNamed:@"avatar-list-unregistered"];
+            break;
+        case ACTIVATED:
+            c.imgViewUser.image = [UIImage imageNamed:@"avatar-list-unregistered"];
+            break;
+        case REGISTERED:
+             c.imgViewUser.image = [UIImage imageNamed:@"avatar-list-registered"];
+        break;
+        default:
+             c.imgViewUser.image = [UIImage imageNamed:@"avatar-list-unregistered"];
+        break;
+    }
 }
 
-#pragma mark -
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (selectedIndexPath.row == indexPath.row) {
+        
+        UserListTableViewCell * prevCell = (UserListTableViewCell *)[tableView cellForRowAtIndexPath:selectedIndexPath];
+        prevCell.imgViewSelected.image = [UIImage imageNamed:@"pin-dot-empty"];;
+        selectedIndexPath = [NSIndexPath indexPathForRow:NOT_SELECTED inSection:NOT_SELECTED];
+        _constraintLeadingSpace.constant = self.navigationController.navigationBar.frame.size.width;
+        _constraintTrailingSpace.constant = -self.navigationController.navigationBar.frame.size.width;
+        [UIView animateWithDuration:.2
+                         animations:^{
+                             [self.view layoutIfNeeded];
+                         }];
+        return;
+    }
+
+    if (selectedIndexPath.row == NOT_SELECTED) {
+        _constraintLeadingSpace.constant = -20;
+        _constraintTrailingSpace.constant = -20;
+        [UIView animateWithDuration:.2  animations: ^{   [self.view layoutIfNeeded]; }];
+    } else  {
+        UserListTableViewCell * prevCell = (UserListTableViewCell *)[tableView cellForRowAtIndexPath:selectedIndexPath];
+        prevCell.imgViewSelected.image = [UIImage imageNamed:@"pin-dot-empty"];
+    }
+    currentUser = [self.users objectAtIndex:indexPath.row];
+    selectedIndexPath = indexPath;
+    UserListTableViewCell *cell = (UserListTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    cell.imgViewSelected.image = [UIImage imageNamed:@"checked"];
+}
+
+-(void) authenticateOTP:(id<IUser>) iuser {
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        OTP *otp = nil;
+        MpinStatus* mpinStatus = [MPin Authenticate:iuser otp:&otp];
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [self stopLoading];
+            switch (mpinStatus.status) {
+                case OK: {
+                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+                    OTPViewController * otpViewController = [storyboard instantiateViewControllerWithIdentifier:@"OTP"];
+                    otpViewController.otpData = otp;
+                    otpViewController.strEmail = [currentUser    getIdentity];
+                    [self.navigationController pushViewController:otpViewController animated:YES];
+                }
+                    break;
+                case INCORRECT_PIN: {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Authentication Failed!"
+                                                                    message:@"Wrong MPIN"
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"Close"
+                                                          otherButtonTitles:nil,
+                                          nil];
+                    [alert show];
+                } break;
+                default: {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[mpinStatus getStatusCodeAsString]
+                                                                    message:mpinStatus.errorMessage
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"Close"
+                                                          otherButtonTitles:nil,
+                                          nil];
+                    [alert show];
+                } break;
+            }
+        });
+    });
+}
 
 -(void) onAccessNumber:(int) an {
     accN = an;
-    [self performSelectorInBackground:@selector(authenticateAN:) withObject:currentUser];
+    [self authenticateAN:[self.users objectAtIndex:selectedIndexPath.row]];
 }
 
 -(void) authenticateAN:(id<IUser>) iuser {
-    MpinStatus* status = [MPin AuthenticateAccessNumber:iuser accessNumber:accN];
-    [self performSelectorOnMainThread:@selector(onAuthenticateCompletedAN:) withObject:status waitUntilDone:NO];
-}
-
--(void) onAuthenticateCompletedAN:(MpinStatus *) mpinStatus {
-    NSString * descritpion = (mpinStatus.status == OK )?(@"User Authentication is SUCCESSFUL!"):(mpinStatus.errorMessage);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[mpinStatus getStatusCodeAsString] message:descritpion delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil, nil];
-    if ((mpinStatus.status == OK ) && [MPin CanLogout:currentUser]) {
-        alert.tag = ON_LOGOUT;
-        [alert addButtonWithTitle:@"Logout"];
-    }
-    [alert show];
-    [self stopLoading];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        MpinStatus* status = [MPin AuthenticateAccessNumber:iuser accessNumber:accN];
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [self stopLoading];
+            NSString * descritpion = (status.status == OK )?(@"User Authentication is SUCCESSFUL!"):(status.errorMessage);
+            switch (status.status) {
+                case OK: {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[status getStatusCodeAsString] message:descritpion delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil, nil];
+                    [alert setTitle:nil];
+                    [alert setMessage:@"Authentication Successful!"];
+                    [alert show];
+                } break;
+                case INCORRECT_PIN: {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Authentication Failed!"
+                                                                    message:@"Wrong MPIN or Access Number!"
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"Close"
+                                                          otherButtonTitles:nil,
+                                          nil];
+                    [alert show];
+                } break;
+                case HTTP_REQUEST_ERROR: {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Authentication Failed!"
+                                                                    message:@"Wrong MPIN or Access Number!"
+                                                                   delegate:nil cancelButtonTitle:@"Close"
+                                                          otherButtonTitles:nil,
+                                          nil];
+                    [alert show];
+                } break;
+                default: {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[status getStatusCodeAsString] message:descritpion delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil, nil];
+                    [alert show];
+                } break;
+            }
+        });
+    });
 }
 
 -(void) authenticate:(id<IUser>) iuser {
-    MpinStatus * s = [MPin Authenticate:iuser];
-    [self performSelectorOnMainThread:@selector(onAuthenticateCompleted:) withObject:s waitUntilDone:NO];
-}
-
--(void) onAuthenticateCompleted:(MpinStatus *) mpinStatus {
-    NSString * descritpion = (mpinStatus.status == OK )?(@"User Authentication is SUCCESSFUL!"):(mpinStatus.errorMessage);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[mpinStatus getStatusCodeAsString] message:descritpion delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil, nil];
-    [alert show];
-    [self stopLoading];
-}
-
--(void) startLoading {  [super startLoading];   }
--(void) stopLoading  {  [super stopLoading];    }
-
-- (IBAction)editButton:(id)sender {
-    UIBarButtonItem * button = (UIBarButtonItem *) sender;
-    if([@"Edit" isEqualToString: [button title]]) {
-        [self.table setEditing:YES
-                      animated:YES];
-        [button setTitle:@"Done"];
-    } else {
-        [self.table setEditing:NO
-                      animated:YES];
-        [button setTitle:@"Edit"];
-    }
-}
-
-- (IBAction)addAction:(id)sender
-{
-    UIViewController * addViewController = [[UIStoryboard storyboardWithName:@"Main_iPhone"
-                                                                      bundle:nil]
-                                            instantiateViewControllerWithIdentifier:@"Add"];
     
-    [self.navigationController pushViewController:addViewController
-                                         animated:YES];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        MpinStatus * mpinStatus = [MPin Authenticate:iuser];
+       
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [self stopLoading];
+            NSString * descritpion = (mpinStatus.status == OK )?(@"User Authentication is SUCCESSFUL!"):(mpinStatus.errorMessage);
+            switch (mpinStatus.status) {
+                case OK: {
+                    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+                    AccountSummaryViewController *vcAccountSummary = [storyboard instantiateViewControllerWithIdentifier:@"AccountSummary"];
+                    vcAccountSummary.strEmail = [currentUser getIdentity];
+                    [self.navigationController pushViewController:vcAccountSummary animated:YES];
+                } break;
+                case INCORRECT_PIN: {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Authentication Failed!" message:@"Wrong MPIN" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil, nil];
+                    [alert show];
+                } break;
+                default: {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[mpinStatus getStatusCodeAsString] message:descritpion delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil, nil];
+                    [alert show];
+                } break;
+            }
+        });
+    });
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -270,7 +383,7 @@ static NSString * const kAN = @"AN";
         [hud setActivity:YES];
         [hud showInView:self.view];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            Boolean isSuccessful = [MPin Logout:currentUser];
+            BOOL isSuccessful = [MPin Logout:[self.users objectAtIndex:selectedIndexPath.row]];
             dispatch_async(dispatch_get_main_queue(), ^(void) {
                 [hud hide];
                 NSString * descritpion = (isSuccessful)?(@"Successful"):(@"Unsuccessful");
@@ -278,9 +391,100 @@ static NSString * const kAN = @"AN";
                 [alert show];
             });
         });
-
+        return;
     }
+    
+    if ((alertView.tag == DELETE_TAG) && (buttonIndex == DELETE_BUTTON_INDEX)) {
+        [self deleteSelectedUser];
+    }
+}
 
+
+- (void) deleteSelectedUser {
+    _constraintLeadingSpace.constant = self.navigationController.navigationBar.frame.size.width;
+    _constraintTrailingSpace.constant = -self.navigationController.navigationBar.frame.size.width;
+    [UIView animateWithDuration:.8  animations:^{   [self.view layoutIfNeeded]; }];
+    id<IUser> iuser = [self.users objectAtIndex:selectedIndexPath.row];
+    [MPin DeleteUser:iuser];
+    [self.users removeObjectAtIndex:selectedIndexPath.row];
+    selectedIndexPath = [NSIndexPath indexPathForRow:NOT_SELECTED inSection:NOT_SELECTED];
+    [self.table reloadData];
+}
+
+
+#pragma mark - My actions -
+
+- (IBAction)btnAddIDTap:(id)sender
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    UIViewController * addViewController = [storyboard instantiateViewControllerWithIdentifier:@"Add"];
+    [self.navigationController pushViewController:addViewController animated:YES];
+
+}
+
+- (IBAction)btnEditTap:(id)sender
+{
+    
+}
+- (IBAction)btnDeleteTap:(id)sender     {
+    id<IUser> iuser = [self.users objectAtIndex:selectedIndexPath.row];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"DELETE"
+                                                    message:[NSString stringWithFormat:@"User \"%@\" will be deleted!", [iuser getIdentity]]
+                                                   delegate:self
+                                          cancelButtonTitle:@"CANCEL"
+                                          otherButtonTitles:@"DELETE",
+                          nil];
+    alert.tag = DELETE_TAG;
+    [alert show];
+}
+- (IBAction)btnAuthTap:(id)sender
+{
+    id<IUser> iuser = [self.users objectAtIndex:selectedIndexPath.row];
+    switch ([iuser getState]) {
+        case INVALID:
+            [[[UIAlertView alloc] initWithTitle:@"Invalid User" message:@"Reactivate an Account!" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil, nil] show];
+        break;
+        case STARTED_REGISTRATION:
+            [self startLoading];
+            pinpadHeaderTitle = kSetupPin;
+            [self finishRegistration:iuser];
+        break;
+        case ACTIVATED:
+            [self startLoading];
+            pinpadHeaderTitle = kSetupPin;
+            [self finishRegistration:iuser];
+            break;
+        case REGISTERED: {
+            [self startLoading];
+            pinpadHeaderTitle = kEnterPin;
+            NSInteger currentSelectedIndex = [[NSUserDefaults standardUserDefaults] integerForKey:kCurrentSelectionIndex];
+            NSArray * settings = [[NSUserDefaults standardUserDefaults] objectForKey:kSettings];
+            NSDictionary * config = [settings objectAtIndex:currentSelectedIndex];
+            Boolean isOTP = [(NSNumber *)[config objectForKey:kIS_OTP] boolValue];
+            Boolean isAN  = [(NSNumber *)[config objectForKey:kIS_ACCESS_NUMBER] boolValue];
+            if(isAN)
+            {
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+                AccessNumberViewController * accessViewController = [storyboard instantiateViewControllerWithIdentifier:@"accessnumber"];
+                accessViewController.delegate = self;
+                accessViewController.strEmail = [currentUser getIdentity];
+                [self.navigationController pushViewController:accessViewController animated:YES];
+            }
+            else if ( isOTP )
+            {
+                [self authenticateOTP:iuser];
+            }
+            else
+            {
+                [self authenticate:iuser];
+            }
+        }
+        break;
+        default:
+            [[[UIAlertView alloc] initWithTitle:@"INFO" message:@"Unsupported State and Action!" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil, nil] show];
+        break;
+            
+    }
 }
 
 

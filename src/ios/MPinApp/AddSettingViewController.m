@@ -23,6 +23,7 @@ static NSString * const kErrorTitle = @"Validation ERROR!";
 
 - (void) startLoading;
 - (void) stopLoading;
+- (IBAction)goBack:(id)sender;
 
 @end
 
@@ -31,7 +32,7 @@ static NSString * const kErrorTitle = @"Validation ERROR!";
 -(void) viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [themeManager  beautifyViewController:self];
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignOnTap:)];
     [singleTap setNumberOfTapsRequired:1];
     [singleTap setNumberOfTouchesRequired:1];
@@ -56,10 +57,15 @@ static NSString * const kErrorTitle = @"Validation ERROR!";
     [hud hide];
 }
 
--(IBAction)onOTPValueChanged:(id)sender {   if([self.otp isOn] && [self.an isOn])  [self.an setOn:NO];  }
--(IBAction)onAccessNumberValueChanged:(id)sender    {   if([self.an isOn] && [self.otp isOn])  [self.otp setOn:NO];     }
+-(IBAction)onOTPValueChanged:(id)sender {
+//    if([self.otp isOn] && [self.an isOn])  [self.an setOn:NO];
+}
+-(IBAction)onAccessNumberValueChanged:(id)sender    {
+//    if([self.an isOn] && [self.otp isOn])  [self.otp setOn:NO];
+}
 
 -(IBAction)onSave:(id)sender {
+    /*
     if ([self.url.text isEqualToString:@""]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:kErrorTitle message:@"Empty rps url !" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil, nil];
         [alert show];
@@ -98,6 +104,7 @@ static NSString * const kErrorTitle = @"Validation ERROR!";
             }
         });
     });
+     */
 }
 
 - (BOOL) isValidURL:(NSString*) strURL {
@@ -121,5 +128,9 @@ static NSString * const kErrorTitle = @"Validation ERROR!";
     }
 }
 
+- (IBAction)goBack:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 @end

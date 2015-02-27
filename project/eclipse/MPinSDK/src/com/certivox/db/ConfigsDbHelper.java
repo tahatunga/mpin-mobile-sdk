@@ -26,16 +26,15 @@ public final class ConfigsDbHelper extends SQLiteOpenHelper {
         
         ContentValues sampleVals = new ContentValues();
         
-        Config cfg = new Config("M-Pin Connect", "http://ec2-54-77-232-113.eu-west-1.compute.amazonaws.com", false, false);
+        Config cfg = new Config("Mobile banking login", "http://tcb.certivox.org", false, false);
         cfg.toContentValues(sampleVals);
         db.insert(ConfigEntry.TABLE_NAME, null, sampleVals);
         
-        cfg = new Config("Bank service", "https://mpindemo-qa-v3.certivox.org", false, true);
+        cfg = new Config("Online banking login", "http://tcb.certivox.org", false, true);
         cfg.toContentValues(sampleVals);
-        long id = db.insert(ConfigEntry.TABLE_NAME, null, sampleVals);
-        PinpadConfigActivity.setActive(m_context, cfg);
+        db.insert(ConfigEntry.TABLE_NAME, null, sampleVals);
         
-        cfg = new Config("Longest Journey Service", "http://otp.m-pin.id/rps", true, false);
+        cfg = new Config("VPN login", "http://otp.m-pin.id", true, false);
         cfg.toContentValues(sampleVals);
         db.insert(ConfigEntry.TABLE_NAME, null, sampleVals);
 

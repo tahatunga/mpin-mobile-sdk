@@ -45,6 +45,7 @@ public:
     bool Parse(const char *str);
     const char * GetStringParam(const char *name) const;
     int GetIntParam(const char *name) const;
+    int64_t GetInt64Param(const char *name) const;
     bool GetBoolParam(const char *name) const;
     std::string GetParseError() const;
     

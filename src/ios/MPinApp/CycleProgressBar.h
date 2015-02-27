@@ -23,6 +23,8 @@
 }
 
 @property (nonatomic, retain , readwrite) UILabel * counterLabel;
+@property (nonatomic, retain , readwrite) UILabel * secLabel;
+
 @property (nonatomic, assign) BOOL isLoading; 
 
 - (void) startAnimation;

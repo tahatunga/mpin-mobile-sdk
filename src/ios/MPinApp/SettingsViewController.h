@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface SettingsViewController : UIViewController <UITableViewDataSource, UITabBarDelegate>
+@interface SettingsViewController : BaseViewController <UITableViewDataSource,UITableViewDelegate, UITabBarDelegate>
 
 @property(nonatomic, readwrite, weak) IBOutlet UITableView * tableView;
 

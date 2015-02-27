@@ -20,10 +20,10 @@ public:
 	virtual IStorage * GetStorage(IStorage::Type type) const;
 	virtual MPinSDK::IPinPad* GetPinPad() const;
 	virtual MPinSDK::CryptoType GetMPinCryptoType() const;
-    virtual int Show();
+    virtual String Show();
 	virtual ~Context();
     
-    void setPin(int mpin);
+    void setPin(const String & mpin);
     
 private:
 	Context();

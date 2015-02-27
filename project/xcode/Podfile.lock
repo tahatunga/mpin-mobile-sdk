@@ -23,13 +23,16 @@ PODS:
   - ATMHud@dhoerl (3.0.0):
     - ATMHud@dhoerl/Core (= 3.0.0)
   - ATMHud@dhoerl/Core (3.0.0)
+  - MFSideMenu (0.5.5)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.4)
   - ATMHud@dhoerl (~> 3.0.0)
+  - MFSideMenu (~> 0.5.5)
 
 SPEC CHECKSUMS:
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
   ATMHud@dhoerl: 010511ea5eb521918bd87fb3681f0f5bd5f97eb1
+  MFSideMenu: 0493b0f57385dd036cc5443407a31fda6dee81ac
 
 COCOAPODS: 0.35.0
