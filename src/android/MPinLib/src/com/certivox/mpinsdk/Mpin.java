@@ -1,0 +1,116 @@
+package com.certivox.mpinsdk;
+
+import java.io.Closeable;
+import java.util.List;
+import java.util.Map;
+
+import android.content.Context;
+
+import com.certivox.models.OTP;
+import com.certivox.models.Status;
+import com.certivox.models.User;
+
+public class Mpin implements Closeable {
+	
+	public Mpin(Context context, Map<String, String> config) {
+		mPtr = nConstruct(context, config);
+	}
+	
+	@Override
+	public void close() {
+		synchronized (this) {
+			nDestruct(mPtr);
+			mPtr = 0;
+		}
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
+		close();
+		super.finalize();
+	}
+	
+	public User MakeNewUser(String id) {
+		return nMakeNewUser(mPtr, id);
+	}
+	
+	public Status StartRegistration(User user) {
+		return nStartRegistration(mPtr, user);
+	}
+	
+	public Status RestartRegistration(User user) {
+		return nRestartRegistration(mPtr, user);
+	}
+	
+	public Status FinishRegistration(User user) {
+		return nFinishRegistration(mPtr, user);
+	}
+	
+	public Status Authenticate(User user) {
+		return nAuthenticate(mPtr, user);
+	}
+	
+	public Status Authenticate(User user, OTP otp) {
+		if (otp == null) {
+			return Authenticate(user);
+		} else {
+			return nAuthenticateOtp(mPtr, user, otp);
+		}
+	}
+	
+	public Status Authenticate(User user, StringBuilder authResultData) {
+		return nAuthenticateResultData(mPtr, user, authResultData);
+	}
+	
+	public Status Authenticate(User user, int accessNumber) {
+		return nAuthenticateAccessNumber(mPtr, user, accessNumber);
+	}
+	
+	public Status ResetPin(User user) {
+		return nResetPin(mPtr, user);
+	}
+	
+	public void DeleteUser(User user) {
+		nDeleteUser(mPtr, user);
+	}
+	
+	public void ListUsers(List<User> users) {
+		nListUsers(mPtr, users);
+	}
+	
+	public boolean CanLogout(User user) {
+		return nCanLogout(mPtr, user);
+	}
+	
+	public boolean Logout(User user) {
+		return nLogout(mPtr, user);
+	}
+	
+	public Status TestBackend(String backend) {
+		return nTestBackend(mPtr, backend);
+	}
+	
+	public Status SetBackend(String backend) {
+		return nSetBackend(mPtr, backend);
+	}
+	
+	private long mPtr;
+	
+	private native long nConstruct(Context context, Map<String, String> config);
+	private native void nDestruct(long ptr);
+	private native User nMakeNewUser(long ptr, String id);
+	private native Status nStartRegistration(long ptr, User user);
+	private native Status nRestartRegistration(long ptr, User user);
+	private native Status nFinishRegistration(long ptr, User user);
+	private native Status nAuthenticate(long ptr, User user);
+	private native Status nAuthenticateOtp(long ptr, User user, OTP otp);
+	private native Status nAuthenticateResultData(long ptr, User user, StringBuilder authResultData);
+	private native Status nAuthenticateAccessNumber(long ptr, User user, int accessNumber);
+	private native Status nResetPin(long ptr, User user);
+	private native void nDeleteUser(long ptr, User user);
+	private native void nListUsers(long ptr, List<User> users);
+	private native boolean nCanLogout(long ptr, User user);
+	private native boolean nLogout(long ptr, User user);
+	private native Status nTestBackend(long ptr, String backend);
+	private native Status nSetBackend(long ptr, String backend);
+}

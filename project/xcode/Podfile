@@ -1,0 +1,6 @@
+workspace 'MPin'
+xcodeproj 'MPinApp/MPinApp.xcodeproj/'
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '7.0'
+pod 'AFNetworking', '~> 2.4'
+pod 'ATMHud@dhoerl', '~> 3.0.0'
